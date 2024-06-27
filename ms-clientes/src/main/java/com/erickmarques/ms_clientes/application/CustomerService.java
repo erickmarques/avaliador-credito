@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.erickmarques.ms_clientes.application.mapper.CustomerMapper;
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveRequest;
+import com.erickmarques.ms_clientes.application.representation.CustomerSaveResponse;
 import com.erickmarques.ms_clientes.domain.Customer;
 import com.erickmarques.ms_clientes.infra.CustomerRepository;
 
@@ -21,13 +22,14 @@ public class CustomerService {
     private final CustomerMapper customerMapper;
 
     @Transactional
-    public Customer creaCustomer(CustomerSaveRequest customerSaveRequest){
+    public CustomerSaveResponse creaCustomer(CustomerSaveRequest customerSaveRequest){
         Customer customer = customerMapper.toEntity(customerSaveRequest);
-        return customerRepository.save(customer);
+        Customer saveCosumer = customerRepository.save(customer);
+        return customerMapper.toDto(saveCosumer);
     }
 
     @Transactional(readOnly = true)
-    public Optional<Customer> findByCpf(String cpf){
-        return customerRepository.findByCpf(cpf);
+    public CustomerSaveResponse findByCpf(String cpf){
+        return customerMapper.toDto(customerRepository.findByCpf(cpf));
     }
 }
