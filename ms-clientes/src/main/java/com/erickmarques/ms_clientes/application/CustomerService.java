@@ -22,7 +22,7 @@ public class CustomerService {
 
     @Transactional
     public Customer creaCustomer(CustomerSaveRequest customerSaveRequest){
-        Customer customer = customerMapper.ToEntity(customerSaveRequest);
+        Customer customer = customerMapper.toEntity(customerSaveRequest);
         return customerRepository.save(customer);
     }
 

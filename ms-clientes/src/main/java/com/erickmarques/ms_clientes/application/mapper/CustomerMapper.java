@@ -1,17 +1,31 @@
 package com.erickmarques.ms_clientes.application.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveRequest;
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveResponse;
 import com.erickmarques.ms_clientes.domain.Customer;
 
-@Mapper
-public interface CustomerMapper {
+public class CustomerMapper {
     
-    @Mapping(target = "id", ignore = true) 
-    Customer ToEntity(CustomerSaveRequest customerSaveRequest);
+    public Customer toEntity(CustomerSaveRequest customerSaveRequest){
+        Customer customer = new Customer();
+
+        customer.setName(customerSaveRequest.getName());
+        customer.setCpf(customerSaveRequest.getCpf());
+        customer.setAge(customerSaveRequest.getAge());
+
+        return customer;
+    }
     
-    CustomerSaveResponse toDto(Customer customer);
+    public CustomerSaveResponse toDto(Customer customer){
+        
+        CustomerSaveResponse customerSaveResponse = new CustomerSaveResponse();
+
+        customerSaveResponse.setId(customer.getId());
+        customerSaveResponse.setName(customer.getName());
+        customerSaveResponse.setCpf(customer.getCpf());
+        customerSaveResponse.setAge(customer.getAge());
+
+        return customerSaveResponse;
+    }
 }

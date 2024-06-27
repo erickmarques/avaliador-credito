@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class CustomerSaveResponse {
     private Long id;
     private String cpf;
-    private String nome;
-    private Integer idade;
+    private String name;
+    private Integer age;
 }
