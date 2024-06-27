@@ -2,7 +2,6 @@ package com.erickmarques.ms_clientes.infra;
 
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.erickmarques.ms_clientes.domain.Customer;
+import com.erickmarques.ms_clientes.util.CustomerUtilTest;
 
 
 /**
@@ -27,16 +27,11 @@ public class CustomerRepositoryTest {
     
     private Customer customerDefault;
 
-    private final Long ID     = 1L;
-    private final String NAME = "Erick Marques";
-    private final String CPF  = "10315487558";
-    private final Integer AGE = 30;
-
     @BeforeEach
     void setUp() {
 
         //cenário 
-        customerDefault = new Customer(ID, NAME, CPF, AGE);
+        customerDefault = CustomerUtilTest.createCostumerDefault();
 
         // ação
         customerRepository.save(customerDefault);
@@ -45,7 +40,7 @@ public class CustomerRepositoryTest {
     @Test
     void givenExistingCustomer_whenFindByCpf_thenCustomerShouldBeReturned(){
         //ação
-        Optional<Customer> customer = customerRepository.findByCpf(CPF);
+        Optional<Customer> customer = customerRepository.findByCpf(CustomerUtilTest.CPF);
 
         //verificação
         assertThat(customer).isPresent();
