@@ -1,5 +1,6 @@
 package com.erickmarques.ms_clientes.application.mapper;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,6 +10,10 @@ import com.erickmarques.ms_clientes.application.representation.CustomerSaveRespo
 import com.erickmarques.ms_clientes.domain.Customer;
 import com.erickmarques.ms_clientes.util.CustomerUtilTest;
 
+/**
+ * Classe de teste para {@link CustomerMapper}.
+ */
+@DisplayName("Testes do Mapper de Cliente")
 public class CustomerMapperTest {
 
     private CustomerMapper customerMapper = new CustomerMapper();
@@ -38,9 +43,6 @@ public class CustomerMapperTest {
          CustomerSaveResponse customerSaveResponse = customerMapper.toDto(customer);
 
          // verificação
-        assertThat(customer.getId()).isEqualTo(customerSaveResponse.getId());
-        assertThat(customer.getName()).isEqualTo(customerSaveResponse.getName());
-        assertThat(customer.getCpf()).isEqualTo(customerSaveResponse.getCpf());
-        assertThat(customer.getAge()).isEqualTo(customerSaveResponse.getAge());
+        CustomerUtilTest.assertCostumerDefault(customer, customerSaveResponse);
     }
 }

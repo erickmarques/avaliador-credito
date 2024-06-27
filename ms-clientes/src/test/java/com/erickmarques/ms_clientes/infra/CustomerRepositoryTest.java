@@ -58,6 +58,5 @@ public class CustomerRepositoryTest {
 
         //verificação
         assertThat(customer).isNotPresent();
-
     }
 }

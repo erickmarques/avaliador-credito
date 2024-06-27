@@ -1,5 +1,8 @@
 package com.erickmarques.ms_clientes.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveRequest;
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveResponse;
 import com.erickmarques.ms_clientes.domain.Customer;
@@ -21,5 +24,13 @@ public class CustomerUtilTest {
 
     public static CustomerSaveRequest createCustomerSaveRequestDefault(){
         return new CustomerSaveRequest(CPF, NAME, AGE);
+    }
+
+    public static void assertCostumerDefault(Customer customer, CustomerSaveResponse customerSaveResponse){
+        assertNotNull(customerSaveResponse.getId());
+        assertThat(customer.getId()).isEqualTo(customerSaveResponse.getId());
+        assertThat(customer.getName()).isEqualTo(customerSaveResponse.getName());
+        assertThat(customer.getCpf()).isEqualTo(customerSaveResponse.getCpf());
+        assertThat(customer.getAge()).isEqualTo(customerSaveResponse.getAge());
     }
 }

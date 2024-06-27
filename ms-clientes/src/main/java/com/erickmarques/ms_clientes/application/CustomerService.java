@@ -1,6 +1,5 @@
 package com.erickmarques.ms_clientes.application;
 
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class CustomerService {
     private final CustomerMapper customerMapper;
 
     @Transactional
-    public CustomerSaveResponse creaCustomer(CustomerSaveRequest customerSaveRequest){
+    public CustomerSaveResponse createCustomer(CustomerSaveRequest customerSaveRequest){
         Customer customer = customerMapper.toEntity(customerSaveRequest);
         Customer saveCosumer = customerRepository.save(customer);
         return customerMapper.toDto(saveCosumer);
