@@ -11,7 +11,7 @@ public class CustomerUtilTest {
 
     public static final Long ID     = 1L;
     public static final String NAME = "Erick Marques";
-    public static final String CPF  = "10315487558";
+    public static final String CPF  = "87439818016";
     public static final Integer AGE = 30;
 
     public static Customer createCostumerDefault(){
