@@ -32,8 +32,6 @@ public class CustomerRepositoryTest {
 
         //cenário 
         customerDefault = CustomerUtilTest.createCostumerDefault();
-
-        // ação
         customerRepository.save(customerDefault);
     }
 

@@ -61,7 +61,7 @@ public class CustomerServiceTest {
     class CreateCustomer {
 
         @Test
-        @DisplayName("Teste para um novo cliente com dados válidos.")
+        @DisplayName("Teste para criar um cliente com dados válidos.")
         void givenNewCustomer_whenCreateCustomer_thenCustomerIsCreatedSuccessfully(){
             
             // cenário
@@ -78,8 +78,8 @@ public class CustomerServiceTest {
         }
 
         @Test
-        @DisplayName("Teste para um novo cliente com cpf já existente.")
-        void givenCustomerWithExistingCpf_whenCreateCustomer_thenFailDueToCpfAlreadyExists(){
+        @DisplayName("Teste para criar um cliente com cpf já existente.")
+        void givenCustomerWithExistingCpf_whenCreateCustomer_thenResponseStatusException(){
             
             // cenário
             when(customerRepository.findByCpf(anyString())).thenReturn(Optional.of(new Customer()));
@@ -96,5 +96,39 @@ public class CustomerServiceTest {
         }
     }
 
-    
+    @Nested
+    class FindByCpf {
+
+        @Test
+        @DisplayName("Teste para pesquisar um cliente por cpf.")
+        void givenCustomerWithExistingCpf_whenFindByCpf_thenReturnCustomer(){
+            
+            // cenário
+            when(customerRepository.findByCpf(anyString())).thenReturn(Optional.of(new Customer()));
+            when(customerMapper.toDto(any(Customer.class))).thenReturn(customerSaveResponse);
+
+            // ação
+           CustomerSaveResponse customerSaveResponse = customerService.findByCpf(anyString());
+
+            // verificação
+            verify(customerRepository, times(1)).findByCpf(anyString());
+            CustomerUtilTest.assertCostumerDefault(customer, customerSaveResponse);
+        }
+
+        @Test
+        @DisplayName("Teste para pesquisar um cliente por cpf inexistente.")
+        void givenCustomerWithNotExistingCpf_whenFindByCpf_thenResponseStatusException(){
+            
+            // cenário
+            when(customerRepository.findByCpf(CustomerUtilTest.CPF)).thenReturn(Optional.empty());
+            
+            // ação
+            ResponseStatusException exception = assertThrows(ResponseStatusException.class, 
+            () -> customerService.findByCpf(CustomerUtilTest.CPF));
+        
+            // verificação
+            assertThat(exception.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(exception.getReason()).isEqualTo("Cliente não encontrado para o cpf: " + CustomerUtilTest.CPF);
+        }
+    }
 }
