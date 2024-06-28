@@ -1,6 +1,5 @@
 package com.erickmarques.ms_clientes.application;
 
-import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

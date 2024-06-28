@@ -1,7 +1,15 @@
 package com.erickmarques.ms_clientes.application;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +19,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.erickmarques.ms_clientes.application.mapper.CustomerMapper;
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveRequest;
@@ -51,7 +61,8 @@ public class CustomerServiceTest {
     class CreateCustomer {
 
         @Test
-        void testeCreateCustomer(){
+        @DisplayName("Teste para um novo cliente com dados válidos.")
+        void givenNewCustomer_whenCreateCustomer_thenCustomerIsCreatedSuccessfully(){
             
             // cenário
             when(customerMapper.toEntity(any(CustomerSaveRequest.class))).thenReturn(customer);
@@ -62,7 +73,26 @@ public class CustomerServiceTest {
             CustomerSaveResponse customerSaveResponse = customerService.createCustomer(customerSaveRequest);
 
             // verificação
+            verify(customerRepository, times(1)).save(any(Customer.class));
             CustomerUtilTest.assertCostumerDefault(customer, customerSaveResponse);
+        }
+
+        @Test
+        @DisplayName("Teste para um novo cliente com cpf já existente.")
+        void givenCustomerWithExistingCpf_whenCreateCustomer_thenFailDueToCpfAlreadyExists(){
+            
+            // cenário
+            when(customerRepository.findByCpf(anyString())).thenReturn(Optional.of(new Customer()));
+
+            // ação
+            ResponseStatusException exception = assertThrows(ResponseStatusException.class, 
+                () -> customerService.createCustomer(customerSaveRequest));
+
+            // verificação
+            assertThat(exception.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+            assertThat(exception.getReason()).isEqualTo("CPF já cadastrado!");
+            verify(customerRepository).findByCpf(anyString());
+            verify(customerRepository, never()).save(any(Customer.class));
         }
     }
 

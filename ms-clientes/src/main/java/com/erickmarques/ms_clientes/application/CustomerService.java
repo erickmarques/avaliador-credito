@@ -24,6 +24,11 @@ public class CustomerService {
 
     @Transactional
     public CustomerSaveResponse createCustomer(CustomerSaveRequest customerSaveRequest){
+
+        if (customerRepository.findByCpf(customerSaveRequest.getCpf()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF já cadastrado!");
+        }
+
         Customer customer = customerMapper.toEntity(customerSaveRequest);
         Customer saveCosumer = customerRepository.save(customer);
         return customerMapper.toDto(saveCosumer);
