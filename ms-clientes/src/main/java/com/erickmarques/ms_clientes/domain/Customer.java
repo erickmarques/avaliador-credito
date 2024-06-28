@@ -25,7 +25,7 @@ public class Customer {
     @Column
     private String name;
 
-    @Column
+    @Column(unique = true)
     private String cpf;
     
     @Column

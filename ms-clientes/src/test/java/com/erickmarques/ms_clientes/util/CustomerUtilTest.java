@@ -23,7 +23,7 @@ public class CustomerUtilTest {
     }
 
     public static CustomerSaveRequest createCustomerSaveRequestDefault(){
-        return new CustomerSaveRequest(CPF, NAME, AGE);
+        return new CustomerSaveRequest(NAME, CPF, AGE);
     }
 
     public static void assertCostumerDefault(Customer customer, CustomerSaveResponse customerSaveResponse){
