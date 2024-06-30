@@ -23,7 +23,7 @@ public class CustomerResource {
     private final CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<CustomerSaveResponse> createCustomer(@Valid @RequestBody CustomerSaveRequest customerSaveRequest){
+    public ResponseEntity<CustomerSaveResponse> criarCliente(@Valid @RequestBody CustomerSaveRequest customerSaveRequest){
 
         CustomerSaveResponse customerSaveResponse = customerService.createCustomer(customerSaveRequest);
 
@@ -33,7 +33,7 @@ public class CustomerResource {
     }
 
     @GetMapping(params = "cpf")
-    public ResponseEntity<CustomerSaveResponse> findByCpf(@RequestParam("cpf") String cpf){
+    public ResponseEntity<CustomerSaveResponse> pesquisarPorCpf(@RequestParam("cpf") String cpf){
         CustomerSaveResponse customerSaveResponse = customerService.findByCpf(cpf);
         return ResponseEntity.ok(customerSaveResponse);
     }
