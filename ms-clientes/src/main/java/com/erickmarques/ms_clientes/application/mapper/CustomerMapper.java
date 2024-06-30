@@ -13,9 +13,9 @@ public class CustomerMapper {
     public Customer toEntity(CustomerSaveRequest customerSaveRequest){
         Customer customer = new Customer();
 
-        customer.setName(customerSaveRequest.getName());
+        customer.setName(customerSaveRequest.getNome());
         customer.setCpf(customerSaveRequest.getCpf());
-        customer.setAge(customerSaveRequest.getAge());
+        customer.setAge(customerSaveRequest.getIdade());
 
         return customer;
     }
@@ -25,9 +25,9 @@ public class CustomerMapper {
         CustomerSaveResponse customerSaveResponse = new CustomerSaveResponse();
 
         customerSaveResponse.setId(customer.getId());
-        customerSaveResponse.setName(customer.getName());
+        customerSaveResponse.setNome(customer.getName());
         customerSaveResponse.setCpf(customer.getCpf());
-        customerSaveResponse.setAge(customer.getAge());
+        customerSaveResponse.setIdade(customer.getAge());
 
         return customerSaveResponse;
     }

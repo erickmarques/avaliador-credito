@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CustomerSaveResponse {
     private Long id;
-    private String name;
+    private String nome;
     private String cpf;
-    private Integer age;
+    private Integer idade;
 }

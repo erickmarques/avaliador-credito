@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 public class CustomerSaveRequest {
 
     @NotBlank(message = "Favor informar o nome!")
-    private String name;
+    private String nome;
     
     @NotBlank(message = "Favor informar o CPF!")
     @CPF(message = "Favor informar um CPF válido!")
     private String cpf;
 
     @NotNull(message = "Favor informar a idade!")
-    private Integer age;
+    private Integer idade;
 }

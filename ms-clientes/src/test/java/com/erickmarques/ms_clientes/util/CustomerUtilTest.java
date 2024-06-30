@@ -29,8 +29,8 @@ public class CustomerUtilTest {
     public static void assertCostumerDefault(Customer customer, CustomerSaveResponse customerSaveResponse){
         assertNotNull(customerSaveResponse.getId());
         assertThat(customer.getId()).isEqualTo(customerSaveResponse.getId());
-        assertThat(customer.getName()).isEqualTo(customerSaveResponse.getName());
+        assertThat(customer.getName()).isEqualTo(customerSaveResponse.getNome());
         assertThat(customer.getCpf()).isEqualTo(customerSaveResponse.getCpf());
-        assertThat(customer.getAge()).isEqualTo(customerSaveResponse.getAge());
+        assertThat(customer.getAge()).isEqualTo(customerSaveResponse.getIdade());
     }
 }

@@ -29,8 +29,8 @@ public class CustomerMapperTest {
 
         // verificação
         assertThat(customerSaveRequest.getCpf()).isEqualTo(customer.getCpf());
-        assertThat(customerSaveRequest.getName()).isEqualTo(customer.getName());
-        assertThat(customerSaveRequest.getAge()).isEqualTo(customer.getAge());
+        assertThat(customerSaveRequest.getNome()).isEqualTo(customer.getName());
+        assertThat(customerSaveRequest.getIdade()).isEqualTo(customer.getAge());
     }
 
     @Test

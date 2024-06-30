@@ -69,16 +69,16 @@ public class CustomerResourceTest {
                     .content(mapper.writeValueAsString(customerSaveRequest)))
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id").isNotEmpty())
-                    .andExpect(jsonPath("$.name").value(customerSaveRequest.getName()))
+                    .andExpect(jsonPath("$.name").value(customerSaveRequest.getNome()))
                     .andExpect(jsonPath("$.cpf").value(customerSaveRequest.getCpf()))
-                    .andExpect(jsonPath("$.age").value(customerSaveRequest.getAge()));
+                    .andExpect(jsonPath("$.age").value(customerSaveRequest.getIdade()));
         } 
 
         @Test
         @DisplayName("Com nome nulo.")
         void givenCustomerWithNullName_whenSaveCustomer_thenThrowException() throws Exception{
 
-            customerSaveRequest.setName(null);
+            customerSaveRequest.setNome(null);
 
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -114,7 +114,7 @@ public class CustomerResourceTest {
         @DisplayName("Com idade nula.")
         void givenCustomerWithNullAge_whenSaveCustomer_thenThrowException() throws Exception{
 
-            customerSaveRequest.setAge(null);
+            customerSaveRequest.setIdade(null);
 
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -137,9 +137,9 @@ public class CustomerResourceTest {
                     .param("cpf", CustomerUtilTest.CPF))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").isNotEmpty())
-                    .andExpect(jsonPath("$.name").value(customerSaveRequest.getName()))
+                    .andExpect(jsonPath("$.name").value(customerSaveRequest.getNome()))
                     .andExpect(jsonPath("$.cpf").value(customerSaveRequest.getCpf()))
-                    .andExpect(jsonPath("$.age").value(customerSaveRequest.getAge()));
+                    .andExpect(jsonPath("$.age").value(customerSaveRequest.getIdade()));
         }
 
         @Test
