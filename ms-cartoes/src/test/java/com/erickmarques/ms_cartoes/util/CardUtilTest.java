@@ -3,6 +3,7 @@ package com.erickmarques.ms_cartoes.util;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CardFlag;
 
@@ -22,6 +23,10 @@ public class CardUtilTest {
         return List.of(new Card(ID, NAME, MASTERCARD, INCOME, BASIC_LIMIT),
                        new Card(2L, "GOLDEN", CardFlag.VISA, BigDecimal.valueOf(10000), BigDecimal.valueOf(1500)),
                        new Card(3L, "SILVER", CardFlag.ELO, BigDecimal.valueOf(3000), BigDecimal.valueOf(900)));
+    }
+
+    public static CardSaveRequest createCardSaveRequestDefault() {
+        return new CardSaveRequest(NAME, MASTERCARD, INCOME, BASIC_LIMIT);
     }
     
 }
