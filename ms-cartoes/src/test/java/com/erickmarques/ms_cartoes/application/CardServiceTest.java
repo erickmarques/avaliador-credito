@@ -1,9 +1,15 @@
 package com.erickmarques.ms_cartoes.application;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -67,6 +73,43 @@ public class CardServiceTest {
             // verificação
             verify(cardRepository, times(1)).save(any(Card.class));
             CardUtilTest.assertCostumerDefault(card, cardSaveResponse);
+        }
+    }
+
+    @Nested
+    class FindByIncome {
+
+        @Test
+        @DisplayName("Teste para retornar cartões com renda menor ou igual ao valor especificado, ordenados por renda decrescente")
+        public void givenCards_WhenIncomeLessThanOrEqual_ThenReturnCards() {
+
+            // cenário
+            BigDecimal income = BigDecimal.valueOf(6000);
+            when(cardRepository.findByIncomeLessThanEqualOrderByIncomeDesc(income)).thenReturn(CardUtilTest.createCardListDefault());
+            
+            // ação
+            List<CardSaveResponse> cards = cardService.findByIncomeLessThanEqualOrderByIncomeDesc(income.longValue());
+
+            // verificação
+            assertNotNull(cards);
+            assertThat(cards).hasSize(3);
+            verify(cardRepository, times(1)).findByIncomeLessThanEqualOrderByIncomeDesc(income);
+        }
+
+        @Test
+        @DisplayName("Teste para retornar uma lista vazia de cartões.")
+        public void givenCards_WhenIncomeLessThanOrEqual_ThenReturnEmptyList() {
+
+            // cenário
+            BigDecimal income = BigDecimal.valueOf(6000);
+            when(cardRepository.findByIncomeLessThanEqualOrderByIncomeDesc(income)).thenReturn(Collections.emptyList());
+            
+            // ação
+            List<CardSaveResponse> cards = cardService.findByIncomeLessThanEqualOrderByIncomeDesc(income.longValue());
+
+            // verificação
+            assertThat(cards).hasSize(0);
+            verify(cardRepository, times(1)).findByIncomeLessThanEqualOrderByIncomeDesc(income);
         }
     }
     
