@@ -3,7 +3,10 @@ package com.erickmarques.ms_cartoes.util;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
+import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CardFlag;
 
@@ -27,6 +30,17 @@ public class CardUtilTest {
 
     public static CardSaveRequest createCardSaveRequestDefault() {
         return new CardSaveRequest(NAME, MASTERCARD, INCOME, BASIC_LIMIT);
+    }
+
+    public static CardSaveResponse createCardSaveResponseDefault() {
+        return new CardSaveResponse(ID, NAME, MASTERCARD, INCOME, BASIC_LIMIT);
+    }
+
+    public static void assertCostumerDefault(Card card, CardSaveResponse cardSaveResponse) {
+        assertThat(cardSaveResponse.getName()).isEqualTo(card.getName());
+        assertThat(cardSaveResponse.getCardFlag()).isEqualTo(card.getCardFlag());
+        assertThat(cardSaveResponse.getIncome()).isEqualTo(card.getIncome());
+        assertThat(cardSaveResponse.getBasicLimit()).isEqualTo(card.getBasicLimit());
     }
     
 }

@@ -48,10 +48,7 @@ public class CardMapperTest {
         CardSaveResponse cardSaveResponse = cardMapper.toDto(card);
 
          // verificação
-        assertThat(cardSaveResponse.getName()).isEqualTo(card.getName());
-        assertThat(cardSaveResponse.getCardFlag()).isEqualTo(card.getCardFlag());
-        assertThat(cardSaveResponse.getIncome()).isEqualTo(card.getIncome());
-        assertThat(cardSaveResponse.getBasicLimit()).isEqualTo(card.getBasicLimit());
+         CardUtilTest.assertCostumerDefault(card, cardSaveResponse);
     }
     
 }
