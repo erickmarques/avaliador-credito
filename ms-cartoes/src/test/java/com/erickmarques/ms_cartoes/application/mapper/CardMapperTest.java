@@ -1,9 +1,13 @@
 package com.erickmarques.ms_cartoes.application.mapper;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,10 +36,26 @@ public class CardMapperTest {
         Card card = cardMapper.toEntity(cardSaveRequest);
 
         // verificação
-        assertThat(cardSaveRequest.getName()).isEqualTo(card.getName());
-        assertThat(cardSaveRequest.getCardFlag()).isEqualTo(card.getCardFlag());
-        assertThat(cardSaveRequest.getIncome()).isEqualTo(card.getIncome());
-        assertThat(cardSaveRequest.getBasicLimit()).isEqualTo(card.getBasicLimit());
+        assertThat(cardSaveRequest.getNome()).isEqualTo(card.getName());
+        assertThat(cardSaveRequest.getBandeiraCartao()).isEqualTo(card.getCardFlag().toString());
+        assertThat(cardSaveRequest.getRenda()).isEqualTo(card.getIncome());
+        assertThat(cardSaveRequest.getLimiteBasico()).isEqualTo(card.getBasicLimit());
+    }
+
+    @Test
+    public void givenCardSaveRequest_whenMappingToEntityWithCardFlagInvalid_thenReturnException() {
+
+        // cenário
+        CardSaveRequest cardSaveRequest  = CardUtilTest.createCardSaveRequestDefault();
+        cardSaveRequest.setBandeiraCartao("INVALID_CARDFLAG");
+
+        // ação
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, 
+                () -> cardMapper.toEntity(cardSaveRequest));
+
+        // verificação
+        assertThat(exception.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(exception.getReason()).isEqualTo("Favor informar uma bandeira de cartão válida!");
     }
 
     @Test

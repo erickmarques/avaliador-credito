@@ -26,7 +26,7 @@ public class CardService {
     @Transactional
     public CardSaveResponse createCard(CardSaveRequest cardSaveRequest){
 
-        if (cardRepository.findByName(cardSaveRequest.getName()).isPresent()) {
+        if (cardRepository.findByName(cardSaveRequest.getNome()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um cartão cadastrado com este nome!");
         }
 

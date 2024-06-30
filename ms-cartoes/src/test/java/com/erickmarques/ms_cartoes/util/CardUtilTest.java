@@ -29,7 +29,7 @@ public class CardUtilTest {
     }
 
     public static CardSaveRequest createCardSaveRequestDefault() {
-        return new CardSaveRequest(NAME, MASTERCARD, INCOME, BASIC_LIMIT);
+        return new CardSaveRequest(NAME, MASTERCARD.toString(), INCOME, BASIC_LIMIT);
     }
 
     public static CardSaveResponse createCardSaveResponseDefault() {
@@ -38,10 +38,10 @@ public class CardUtilTest {
 
     public static void assertCostumerDefault(Card card, CardSaveResponse cardSaveResponse) {
         assertThat(cardSaveResponse.getId()).isEqualTo(card.getId());
-        assertThat(cardSaveResponse.getName()).isEqualTo(card.getName());
-        assertThat(cardSaveResponse.getCardFlag()).isEqualTo(card.getCardFlag());
-        assertThat(cardSaveResponse.getIncome()).isEqualTo(card.getIncome());
-        assertThat(cardSaveResponse.getBasicLimit()).isEqualTo(card.getBasicLimit());
+        assertThat(cardSaveResponse.getNome()).isEqualTo(card.getName());
+        assertThat(cardSaveResponse.getBandeiraCartao()).isEqualTo(card.getCardFlag());
+        assertThat(cardSaveResponse.getRenda()).isEqualTo(card.getIncome());
+        assertThat(cardSaveResponse.getLimiteBasico()).isEqualTo(card.getBasicLimit());
     }
     
 }

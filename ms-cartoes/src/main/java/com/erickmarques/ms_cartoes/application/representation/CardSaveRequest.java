@@ -2,7 +2,6 @@ package com.erickmarques.ms_cartoes.application.representation;
 
 import java.math.BigDecimal;
 
-import com.erickmarques.ms_cartoes.domain.CardFlag;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -17,16 +16,16 @@ import lombok.NoArgsConstructor;
 public class CardSaveRequest {
     @NotNull(message = "Favor informar o nome do cartão!")
     @NotBlank(message = "Favor informar o nome do cartão!")
-    private String name;
+    private String nome;
 
     @NotNull(message = "Favor informar a bandeira do cartão!")
-    private CardFlag cardFlag;
+    private String bandeiraCartao;
 
     @NotNull(message = "Favor informar a renda do cartão!")
     @DecimalMin(value = "0.0", inclusive = false, message = "Renda tem que valor maior que zero.")
-    private BigDecimal income;
+    private BigDecimal renda;
 
     @NotNull(message = "Favor informar o limite básico do cartão!")
     @DecimalMin(value = "0.0", inclusive = false, message = "Limite básico tem que valor maior que zero.")
-    private BigDecimal basicLimit;
+    private BigDecimal limiteBasico;
 }

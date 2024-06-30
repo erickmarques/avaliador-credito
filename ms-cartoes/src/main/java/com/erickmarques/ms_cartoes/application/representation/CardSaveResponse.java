@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CardSaveResponse {
     private Long id;
-    private String name;
-    private CardFlag cardFlag;
-    private BigDecimal income;
-    private BigDecimal basicLimit;
+    private String nome;
+    private CardFlag bandeiraCartao;
+    private BigDecimal renda;
+    private BigDecimal limiteBasico;
 }
