@@ -24,6 +24,7 @@ public class CardMapper {
         
         CardSaveResponse cardSaveResponse = new CardSaveResponse();
 
+        cardSaveResponse.setId(card.getId());
         cardSaveResponse.setName(card.getName());
         cardSaveResponse.setCardFlag(card.getCardFlag());
         cardSaveResponse.setIncome(card.getIncome());

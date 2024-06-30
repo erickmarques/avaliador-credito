@@ -37,6 +37,7 @@ public class CardUtilTest {
     }
 
     public static void assertCostumerDefault(Card card, CardSaveResponse cardSaveResponse) {
+        assertThat(cardSaveResponse.getId()).isEqualTo(card.getId());
         assertThat(cardSaveResponse.getName()).isEqualTo(card.getName());
         assertThat(cardSaveResponse.getCardFlag()).isEqualTo(card.getCardFlag());
         assertThat(cardSaveResponse.getIncome()).isEqualTo(card.getIncome());

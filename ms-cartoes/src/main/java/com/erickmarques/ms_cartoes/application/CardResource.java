@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -23,15 +24,14 @@ public class CardResource {
     private final CardService cardService;
 
     @PostMapping
-    public ResponseEntity<CardSaveResponse> criarCartao(@RequestBody CardSaveRequest cardSaveRequest){
+    public ResponseEntity<CardSaveResponse> criarCartao(@Valid @RequestBody CardSaveRequest cardSaveRequest){
         CardSaveResponse cardSaveResponse = cardService.createCard(cardSaveRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(cardSaveResponse);
     }
 
     @GetMapping(params = "renda")
-    public ResponseEntity<List<CardSaveResponse>> obterCartoesComRendaAte(@RequestParam("renda") Long renda){
+    public ResponseEntity<List<CardSaveResponse>> pesquisarCartoesComRendaAte(@RequestParam("renda") Long renda){
         List<CardSaveResponse> cards = cardService.findByIncomeLessThanEqualOrderByIncomeDesc(renda);
         return ResponseEntity.ok(cards);
     }
-    
 }

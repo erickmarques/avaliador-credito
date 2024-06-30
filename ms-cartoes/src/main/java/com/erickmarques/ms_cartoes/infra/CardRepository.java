@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 import com.erickmarques.ms_cartoes.domain.Card;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
@@ -16,4 +18,12 @@ public interface CardRepository extends JpaRepository<Card, Long> {
      * @return List<Card>
     */
     List<Card> findByIncomeLessThanEqualOrderByIncomeDesc(BigDecimal income);
+
+    /**
+     * Pesquisar um cartão pelo nome.
+     * 
+     * @param name
+     * @return Optional<Card>
+    */
+    Optional<Card> findByName(String name);
 }
