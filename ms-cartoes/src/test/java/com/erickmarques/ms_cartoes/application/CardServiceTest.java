@@ -10,6 +10,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -133,6 +134,46 @@ public class CardServiceTest {
             // verificação
             assertThat(cards).hasSize(0);
             verify(cardRepository, times(1)).findByIncomeLessThanEqualOrderByIncomeDesc(income);
+        }
+    }
+
+    @Nested
+    class FindById {
+        @Test
+        @DisplayName("Teste para retornar o cartão por ID.")
+        public void givenCard_WhenFindById_ThenReturnCard() {
+
+            // cenário
+            when(cardRepository.findById(card.getId())).thenReturn(Optional.of(card));
+            
+            // ação
+            Card cardFind = cardService.findById(card.getId());
+
+            // verificação
+            assertThat(cardFind.getId()).isEqualTo(card.getId());
+            assertThat(cardFind.getName()).isEqualTo(card.getName());
+            assertThat(cardFind.getCardFlag()).isEqualTo(card.getCardFlag());
+            assertThat(cardFind.getIncome()).isEqualTo(card.getIncome());
+            assertThat(cardFind.getBasicLimit()).isEqualTo(card.getBasicLimit());
+            verify(cardRepository, times(1)).findById(card.getId());
+        }
+
+        @Test
+        @DisplayName("Teste para pesquisar um cartão por id inexistente.")
+        void givenCardWithNotExistingId_whenFindById_thenResponseStatusException(){
+
+            // cenário
+            when(cardRepository.findById(card.getId())).thenReturn(Optional.empty());
+            
+            // ação
+            ResponseStatusException exception = assertThrows(ResponseStatusException.class, 
+            () -> cardService.findById(card.getId()));
+        
+
+            // verificação
+            assertThat(exception.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(exception.getReason()).isEqualTo("Cartão não encontrado para o ID: " + card.getId());
+            verify(cardRepository, times(1)).findById(card.getId());
         }
     }
     
