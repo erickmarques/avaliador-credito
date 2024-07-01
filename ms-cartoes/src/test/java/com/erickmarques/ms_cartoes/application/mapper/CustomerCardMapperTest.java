@@ -7,11 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.erickmarques.ms_cartoes.application.representation.CustomerCardResponse;
 import com.erickmarques.ms_cartoes.domain.CustomerCard;
-import com.erickmarques.ms_cartoes.util.CardUtilTest;
+import com.erickmarques.ms_cartoes.util.CustomerCardUtilTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.math.BigDecimal;
 
 /**
  * Classe de teste para {@link CustomerCardMapper}.
@@ -27,7 +25,7 @@ public class CustomerCardMapperTest {
     public void givenCostumerCard_whenMappingToDto_thenMapCorrectly() {
 
         // cenário
-        CustomerCard customerCard = new CustomerCard(1L, "10315487455", CardUtilTest.createCardDefault(), BigDecimal.valueOf(200));
+        CustomerCard customerCard = CustomerCardUtilTest.createCustomerCardDefault();
 
         // ação
         CustomerCardResponse customerCardResponse = customerCardMapper.toDto(customerCard);

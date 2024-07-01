@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.erickmarques.ms_cartoes.application.mapper.CustomerCardMapper;
 import com.erickmarques.ms_cartoes.application.representation.CustomerCardResponse;
-import com.erickmarques.ms_cartoes.infra.CustomerCardRepository;
+import com.erickmarques.ms_cartoes.infra.repository.CustomerCardRepository;
 
 import lombok.RequiredArgsConstructor;
 

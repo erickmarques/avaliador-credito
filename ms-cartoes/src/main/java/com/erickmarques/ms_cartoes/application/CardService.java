@@ -12,7 +12,7 @@ import com.erickmarques.ms_cartoes.application.mapper.CardMapper;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
 import com.erickmarques.ms_cartoes.domain.Card;
-import com.erickmarques.ms_cartoes.infra.CardRepository;
+import com.erickmarques.ms_cartoes.infra.repository.CardRepository;
 
 import lombok.RequiredArgsConstructor;
 

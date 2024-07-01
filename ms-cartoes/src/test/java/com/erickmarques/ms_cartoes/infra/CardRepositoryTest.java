@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.erickmarques.ms_cartoes.domain.Card;
+import com.erickmarques.ms_cartoes.infra.repository.CardRepository;
 import com.erickmarques.ms_cartoes.util.CardUtilTest;
 
 /**

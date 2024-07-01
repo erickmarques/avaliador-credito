@@ -11,6 +11,8 @@ import java.util.List;
 
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CustomerCard;
+import com.erickmarques.ms_cartoes.infra.repository.CardRepository;
+import com.erickmarques.ms_cartoes.infra.repository.CustomerCardRepository;
 import com.erickmarques.ms_cartoes.util.CardUtilTest;
 import com.erickmarques.ms_cartoes.util.CustomerCardUtilTest;
 

@@ -15,14 +15,13 @@ public class CardMapper {
     public Card toEntity(CardSaveRequest cardSaveRequest){
 
         CardFlag cardFlag = stringToCardFlag(cardSaveRequest.getBandeiraCartao());
-        Card card         = new Card();
-        
-        card.setName(cardSaveRequest.getNome());
-        card.setCardFlag(cardFlag);
-        card.setIncome(cardSaveRequest.getRenda());
-        card.setBasicLimit(cardSaveRequest.getLimiteBasico());
-        
-        return card;
+
+        return Card.builder()
+                .name(cardSaveRequest.getNome())
+                .cardFlag(cardFlag)
+                .income(cardSaveRequest.getRenda())
+                .basicLimit(cardSaveRequest.getLimiteBasico())
+                .build();
     }
 
     private CardFlag stringToCardFlag(String cardFlagDto){
@@ -39,15 +38,13 @@ public class CardMapper {
     
     public CardSaveResponse toDto(Card card){
         
-        CardSaveResponse cardSaveResponse = new CardSaveResponse();
-
-        cardSaveResponse.setId(card.getId());
-        cardSaveResponse.setNome(card.getName());
-        cardSaveResponse.setBandeiraCartao(card.getCardFlag());
-        cardSaveResponse.setRenda(card.getIncome());
-        cardSaveResponse.setLimiteBasico(card.getBasicLimit());
-
-        return cardSaveResponse;
+        return CardSaveResponse.builder()
+                .id(card.getId())
+                .nome(card.getName())
+                .bandeiraCartao(card.getCardFlag())
+                .renda(card.getIncome())
+                .limiteBasico(card.getBasicLimit())
+                .build();
     }
     
 }

@@ -1,4 +1,4 @@
-package com.erickmarques.ms_cartoes.infra;
+package com.erickmarques.ms_cartoes.infra.repository;
 
 import java.math.BigDecimal;
 
