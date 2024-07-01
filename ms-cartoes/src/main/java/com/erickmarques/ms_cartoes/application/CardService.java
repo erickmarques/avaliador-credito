@@ -45,5 +45,14 @@ public class CardService {
                 .map(card -> cardMapper.toDto(card))
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public Card findById(Long id){
+        return cardRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, 
+                    "Cartão não encontrado para o ID: " + id));
+    }
 }
 
