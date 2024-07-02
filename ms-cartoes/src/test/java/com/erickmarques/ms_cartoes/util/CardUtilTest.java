@@ -36,6 +36,14 @@ public class CardUtilTest {
         return new CardSaveResponse(ID, NAME, MASTERCARD, INCOME, BASIC_LIMIT);
     }
 
+    public static List<CardSaveResponse> createCardSaveResponseListDefault() {
+        return List.of(
+                    new CardSaveResponse(ID, NAME, MASTERCARD, INCOME, BASIC_LIMIT),
+                    new CardSaveResponse(2L, "GOLDEN", CardFlag.VISA, BigDecimal.valueOf(10000), BigDecimal.valueOf(1500)),
+                    new CardSaveResponse(3L, "SILVER", CardFlag.ELO, BigDecimal.valueOf(3000), BigDecimal.valueOf(900))
+                );
+    }
+
     public static void assertCostumerDefault(Card card, CardSaveResponse cardSaveResponse) {
         assertThat(cardSaveResponse.getId()).isEqualTo(card.getId());
         assertThat(cardSaveResponse.getNome()).isEqualTo(card.getName());

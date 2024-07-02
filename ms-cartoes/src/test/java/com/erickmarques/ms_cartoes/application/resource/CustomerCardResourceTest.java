@@ -46,11 +46,12 @@ public class CustomerCardResourceTest {
         @DisplayName("Teste de pesquisar por cpf.")
         void givenCustomerCards_whenCpfProvided_thenReturnListOfCustomerCards() throws Exception{
     
+            // cenário
             List<CardSaveResponse> cards = List.of(CardUtilTest.createCardSaveResponseDefault());
             List<CustomerCardResponse> customerCards = CustomerCardUtilTest.createCustomerCardResponseListDefault(cards);
-    
             when(customerCardService.findCardsByCpf(CustomerCardUtilTest.CPF)).thenReturn(customerCards);
     
+            // ação / verificação
             mockMvc.perform(get(BASE_URL)
                         .param("cpf", CustomerCardUtilTest.CPF))
                         .andExpect(status().isOk())
@@ -64,8 +65,10 @@ public class CustomerCardResourceTest {
         @DisplayName("Teste de pesquisar por um cpf inexistente.")
         void givenCustomerCardWithNotExistingCpf_WhenfindByCpf_ThenReturnEmptyList() throws Exception{
     
+            // cenário
             when(customerCardService.findCardsByCpf(CustomerCardUtilTest.CPF)).thenReturn(Collections.emptyList());
     
+            // ação / verificação
             mockMvc.perform(get(BASE_URL)
                         .param("cpf", CustomerCardUtilTest.CPF))
                         .andExpect(status().isOk())

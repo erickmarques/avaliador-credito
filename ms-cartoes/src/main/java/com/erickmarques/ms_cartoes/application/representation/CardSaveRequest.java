@@ -19,6 +19,7 @@ public class CardSaveRequest {
     private String nome;
 
     @NotNull(message = "Favor informar a bandeira do cartão!")
+    @NotBlank(message = "Favor informar o nome do cartão!")
     private String bandeiraCartao;
 
     @NotNull(message = "Favor informar a renda do cartão!")
