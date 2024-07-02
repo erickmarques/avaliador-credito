@@ -69,9 +69,9 @@ public class CustomerResourceTest {
                     .content(mapper.writeValueAsString(customerSaveRequest)))
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id").isNotEmpty())
-                    .andExpect(jsonPath("$.name").value(customerSaveRequest.getNome()))
+                    .andExpect(jsonPath("$.nome").value(customerSaveRequest.getNome()))
                     .andExpect(jsonPath("$.cpf").value(customerSaveRequest.getCpf()))
-                    .andExpect(jsonPath("$.age").value(customerSaveRequest.getIdade()));
+                    .andExpect(jsonPath("$.idade").value(customerSaveRequest.getIdade()));
         } 
 
         @Test
@@ -137,9 +137,9 @@ public class CustomerResourceTest {
                     .param("cpf", CustomerUtilTest.CPF))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").isNotEmpty())
-                    .andExpect(jsonPath("$.name").value(customerSaveRequest.getNome()))
+                    .andExpect(jsonPath("$.nome").value(customerSaveRequest.getNome()))
                     .andExpect(jsonPath("$.cpf").value(customerSaveRequest.getCpf()))
-                    .andExpect(jsonPath("$.age").value(customerSaveRequest.getIdade()));
+                    .andExpect(jsonPath("$.idade").value(customerSaveRequest.getIdade()));
         }
 
         @Test
