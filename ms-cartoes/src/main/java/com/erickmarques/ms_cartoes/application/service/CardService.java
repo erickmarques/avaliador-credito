@@ -1,4 +1,4 @@
-package com.erickmarques.ms_cartoes.application;
+package com.erickmarques.ms_cartoes.application.service;
 
 import java.math.BigDecimal;
 import java.util.List;

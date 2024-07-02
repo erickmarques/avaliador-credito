@@ -1,4 +1,4 @@
-package com.erickmarques.ms_cartoes.application;
+package com.erickmarques.ms_cartoes.application.resource;
 
 import org.springframework.http.ResponseEntity;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erickmarques.ms_cartoes.application.representation.CustomerCardResponse;
+import com.erickmarques.ms_cartoes.application.service.CustomerCardService;
 
 import lombok.RequiredArgsConstructor;
 

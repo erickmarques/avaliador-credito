@@ -1,4 +1,4 @@
-package com.erickmarques.ms_cartoes.application;
+package com.erickmarques.ms_cartoes.application.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

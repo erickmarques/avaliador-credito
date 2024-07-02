@@ -21,6 +21,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.erickmarques.ms_cartoes.application.mapper.CustomerCardMapper;
 import com.erickmarques.ms_cartoes.application.representation.CustomerCardResponse;
+import com.erickmarques.ms_cartoes.application.service.CardService;
+import com.erickmarques.ms_cartoes.application.service.CustomerCardService;
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CardRequestData;
 import com.erickmarques.ms_cartoes.domain.CustomerCard;

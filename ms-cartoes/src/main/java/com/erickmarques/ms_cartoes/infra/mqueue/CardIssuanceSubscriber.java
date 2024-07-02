@@ -4,7 +4,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import com.erickmarques.ms_cartoes.application.CardIssuanceService;
+import com.erickmarques.ms_cartoes.application.service.CardIssuanceService;
 
 import lombok.RequiredArgsConstructor;
 

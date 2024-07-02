@@ -1,4 +1,4 @@
-package com.erickmarques.ms_cartoes.application;
+package com.erickmarques.ms_cartoes.application.resource;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
+import com.erickmarques.ms_cartoes.application.service.CardService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
