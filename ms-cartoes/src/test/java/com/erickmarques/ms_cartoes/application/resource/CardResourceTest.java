@@ -1,10 +1,8 @@
 package com.erickmarques.ms_cartoes.application.resource;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -134,7 +132,6 @@ public class CardResourceTest {
         void givenNewCard_whenCardIncomeIsNull_thenReturnBadRequest() throws Exception{
 
             // cenário
-            
             cardSaveRequest.setRenda(null);
 
             // ação / verificação
@@ -149,7 +146,6 @@ public class CardResourceTest {
         void givenNewCard_whenCardBasicLimitIsNull_thenReturnBadRequest() throws Exception{
 
             // cenário
-            
             cardSaveRequest.setLimiteBasico(null);
 
             // ação / verificação
