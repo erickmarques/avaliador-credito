@@ -1,10 +1,15 @@
 package com.erickmarques.ms_cartoes.application;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,8 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.erickmarques.ms_cartoes.application.mapper.CustomerCardMapper;
-import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
-import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
+import com.erickmarques.ms_cartoes.application.representation.CustomerCardResponse;
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CardRequestData;
 import com.erickmarques.ms_cartoes.domain.CustomerCard;
@@ -48,8 +52,43 @@ public class CustomerCardServiceTest {
     private CardRequestData cardRequestData;
 
     @Nested
-    class CreateCard {
+    class FindCardsByCpf {
 
+        @Test
+        @DisplayName("Teste para retornar cartões de um cliente por cpf.")
+        public void givenCustomerCards_WhenfindByCpf_ThenReturnCustomerCards() {
+
+            // cenário
+            List<Card> cards = CardUtilTest.createCardListDefault();
+            when(customerCardRepository.findByCpfOrderByCardLimitDesc(anyString())).thenReturn(CustomerCardUtilTest.createCustomerCardListDefault(cards));
+            
+            // ação
+            List<CustomerCardResponse> customerCards = customerCardService.findCardsByCpf(anyString());
+
+            // verificação
+            assertNotNull(customerCards);
+            assertThat(customerCards).hasSize(4);
+            verify(customerCardRepository, times(1)).findByCpfOrderByCardLimitDesc(anyString());
+        }
+
+        @Test
+        @DisplayName("Teste para retornar uma lista vazia de cartões de um cliente ao pesquisar por um cpf que não existe.")
+        public void givenCustomerCardWithNotExistingCpf_WhenfindByCpf_ThenReturnEmptyList() {
+
+            // cenário
+            when(customerCardRepository.findByCpfOrderByCardLimitDesc(anyString())).thenReturn(Collections.emptyList());
+            
+            // ação
+            List<CustomerCardResponse> customerCards = customerCardService.findCardsByCpf(anyString());
+
+            // verificação
+            assertThat(customerCards).hasSize(0);
+            verify(customerCardRepository, times(1)).findByCpfOrderByCardLimitDesc(anyString());
+        }
+    }
+
+    @Nested
+    class CreateCustomerCard {
         @Test
         @DisplayName("Teste para criar um novo cartão para um cliente.")
         void givenNewCustomerCard_whenSave_thenCustomerCardIsCreatedSuccessfully(){
