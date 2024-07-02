@@ -1,4 +1,4 @@
-package com.erickmarques.ms_cartoes.application;
+package com.erickmarques.ms_cartoes.application.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -21,8 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.erickmarques.ms_cartoes.application.mapper.CustomerCardMapper;
 import com.erickmarques.ms_cartoes.application.representation.CustomerCardResponse;
-import com.erickmarques.ms_cartoes.application.service.CardService;
-import com.erickmarques.ms_cartoes.application.service.CustomerCardService;
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CardRequestData;
 import com.erickmarques.ms_cartoes.domain.CustomerCard;

@@ -1,7 +1,5 @@
 package com.erickmarques.ms_cartoes.application.service;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
 import com.erickmarques.ms_cartoes.domain.CardRequestData;
 import com.erickmarques.ms_cartoes.util.CustomerCardUtilTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
