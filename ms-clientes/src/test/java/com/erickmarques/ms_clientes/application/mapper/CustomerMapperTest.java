@@ -2,6 +2,8 @@ package com.erickmarques.ms_clientes.application.mapper;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,10 +15,12 @@ import com.erickmarques.ms_clientes.util.CustomerUtilTest;
 /**
  * Classe de teste para {@link CustomerMapper}.
  */
+@SpringBootTest
 @DisplayName("Testes do Mapper de Cliente")
 public class CustomerMapperTest {
 
-    private CustomerMapper customerMapper = new CustomerMapper();
+    @Autowired
+    private CustomerMapper customerMapper;
 
     @Test
     public void givenCustomerSaveRequest_whenMappingToEntity_thenMapCorrectly() {
