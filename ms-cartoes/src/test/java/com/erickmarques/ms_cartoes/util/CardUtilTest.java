@@ -29,18 +29,52 @@ public class CardUtilTest {
     }
 
     public static CardSaveRequest createCardSaveRequestDefault() {
-        return new CardSaveRequest(NAME, MASTERCARD.toString(), INCOME, BASIC_LIMIT);
+        return CardSaveRequest
+                .builder()
+                .nome(NAME)
+                .bandeiraCartao(MASTERCARD.toString())
+                .renda(INCOME)
+                .limiteBasico(BASIC_LIMIT)
+                .build();
     }
 
     public static CardSaveResponse createCardSaveResponseDefault() {
-        return new CardSaveResponse(ID, NAME, MASTERCARD, INCOME, BASIC_LIMIT);
+        return CardSaveResponse
+                .builder()
+                .id(ID)
+                .nome(NAME)
+                .bandeiraCartao(MASTERCARD)
+                .renda(INCOME)
+                .limiteBasico(BASIC_LIMIT)
+                .build();
     }
 
     public static List<CardSaveResponse> createCardSaveResponseListDefault() {
         return List.of(
-                    new CardSaveResponse(ID, NAME, MASTERCARD, INCOME, BASIC_LIMIT),
-                    new CardSaveResponse(2L, "GOLDEN", CardFlag.VISA, BigDecimal.valueOf(10000), BigDecimal.valueOf(1500)),
-                    new CardSaveResponse(3L, "SILVER", CardFlag.ELO, BigDecimal.valueOf(3000), BigDecimal.valueOf(900))
+                    CardSaveResponse
+                        .builder()
+                        .id(ID)
+                        .nome(NAME)
+                        .bandeiraCartao(MASTERCARD)
+                        .renda(INCOME)
+                        .limiteBasico(BASIC_LIMIT)
+                        .build(),
+
+                    CardSaveResponse.builder()
+                        .id(2L)
+                        .nome("GOLDEN")
+                        .bandeiraCartao(CardFlag.VISA)
+                        .renda(BigDecimal.valueOf(10000))
+                        .limiteBasico(BigDecimal.valueOf(1500))
+                        .build(),
+
+                    CardSaveResponse.builder()
+                        .id(3L)
+                        .nome("SILVER")
+                        .bandeiraCartao(CardFlag.ELO)
+                        .renda(BigDecimal.valueOf(3000))
+                        .limiteBasico(BigDecimal.valueOf(900))
+                        .build()
                 );
     }
 

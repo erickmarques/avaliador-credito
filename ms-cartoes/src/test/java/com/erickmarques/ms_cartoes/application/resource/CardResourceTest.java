@@ -4,7 +4,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -43,16 +42,6 @@ public class CardResourceTest {
 
     private final String BASE_URL = "/api/cartoes";
 
-    private CardSaveRequest cardSaveRequest;
-    private CardSaveResponse cardSaveResponse;
-
-    @BeforeEach
-    void setUp() {
-        // cenário
-        cardSaveRequest  = CardUtilTest.createCardSaveRequestDefault();
-        cardSaveResponse = CardUtilTest.createCardSaveResponseDefault();
-    }
-
     @Nested
     class CriarCartao {
 
@@ -61,6 +50,8 @@ public class CardResourceTest {
         void givenNewCard_whenCreateCard_thenCardIsCreatedSuccessfully() throws Exception{
 
             // cenário
+            CardSaveRequest cardSaveRequest   = CardUtilTest.createCardSaveRequestDefault();
+            CardSaveResponse cardSaveResponse = CardUtilTest.createCardSaveResponseDefault();
             when(cardService.createCard(cardSaveRequest)).thenReturn(cardSaveResponse);
 
             // ação / verificação
@@ -76,12 +67,18 @@ public class CardResourceTest {
         void givenNewCard_whenNameIsNull_thenReturnBadRequest() throws Exception{
 
             // cenário
-            cardSaveRequest.setNome(null);
+            CardSaveRequest cardWithNameIsNull  = CardSaveRequest
+                                                    .builder()
+                                                    .nome(null)
+                                                    .bandeiraCartao(CardUtilTest.MASTERCARD.toString())
+                                                    .renda(CardUtilTest.INCOME)
+                                                    .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                    .build();
 
             // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(cardSaveRequest)))
+                    .content(objectMapper.writeValueAsString(cardWithNameIsNull)))
                     .andExpect(status().isBadRequest());
         }
 
@@ -90,12 +87,17 @@ public class CardResourceTest {
         void givenNewCard_whenNameIsEmpty_thenReturnBadRequest() throws Exception{
 
             // cenário
-            cardSaveRequest.setNome(" ");
-
+            CardSaveRequest cardWithNameIsEmpty  = CardSaveRequest
+                                                    .builder()
+                                                    .nome(" ")
+                                                    .bandeiraCartao(CardUtilTest.MASTERCARD.toString())
+                                                    .renda(CardUtilTest.INCOME)
+                                                    .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                    .build();
             // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(cardSaveRequest)))
+                    .content(objectMapper.writeValueAsString(cardWithNameIsEmpty)))
                     .andExpect(status().isBadRequest());
         }
 
@@ -104,12 +106,18 @@ public class CardResourceTest {
         void givenNewCard_whenCardFlagIsNull_thenReturnBadRequest() throws Exception{
 
             // cenário
-            cardSaveRequest.setBandeiraCartao(null);
+            CardSaveRequest cardWithCardFlagIsNull  = CardSaveRequest
+                                                        .builder()
+                                                        .nome(CardUtilTest.NAME)
+                                                        .bandeiraCartao(null)
+                                                        .renda(CardUtilTest.INCOME)
+                                                        .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                        .build();
 
             // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(cardSaveRequest)))
+                    .content(objectMapper.writeValueAsString(cardWithCardFlagIsNull)))
                     .andExpect(status().isBadRequest());
         }
 
@@ -118,12 +126,18 @@ public class CardResourceTest {
         void givenNewCard_whenCardFlagIsEmpty_thenReturnBadRequest() throws Exception{
 
             // cenário
-            cardSaveRequest.setBandeiraCartao(" ");
+            CardSaveRequest cardWithCardFlagIsEmpty  = CardSaveRequest
+                                                        .builder()
+                                                        .nome(CardUtilTest.NAME)
+                                                        .bandeiraCartao(null)
+                                                        .renda(CardUtilTest.INCOME)
+                                                        .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                        .build();
 
             // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(cardSaveRequest)))
+                    .content(objectMapper.writeValueAsString(cardWithCardFlagIsEmpty)))
                     .andExpect(status().isBadRequest());
         }
 
@@ -132,12 +146,18 @@ public class CardResourceTest {
         void givenNewCard_whenCardIncomeIsNull_thenReturnBadRequest() throws Exception{
 
             // cenário
-            cardSaveRequest.setRenda(null);
+            CardSaveRequest cardWithIncomeIsNull  = CardSaveRequest
+                                                        .builder()
+                                                        .nome(CardUtilTest.NAME)
+                                                        .bandeiraCartao(CardUtilTest.MASTERCARD.toString())
+                                                        .renda(null)
+                                                        .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                        .build();
 
             // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(cardSaveRequest)))
+                    .content(objectMapper.writeValueAsString(cardWithIncomeIsNull)))
                     .andExpect(status().isBadRequest());
         }
 
@@ -146,12 +166,18 @@ public class CardResourceTest {
         void givenNewCard_whenCardBasicLimitIsNull_thenReturnBadRequest() throws Exception{
 
             // cenário
-            cardSaveRequest.setLimiteBasico(null);
+            CardSaveRequest cardWithBasicLimitIsNull  = CardSaveRequest
+                                                            .builder()
+                                                            .nome(CardUtilTest.NAME)
+                                                            .bandeiraCartao(CardUtilTest.MASTERCARD.toString())
+                                                            .renda(CardUtilTest.INCOME)
+                                                            .limiteBasico(null)
+                                                            .build();
 
             // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(cardSaveRequest)))
+                    .content(objectMapper.writeValueAsString(cardWithBasicLimitIsNull)))
                     .andExpect(status().isBadRequest());
         }
     }

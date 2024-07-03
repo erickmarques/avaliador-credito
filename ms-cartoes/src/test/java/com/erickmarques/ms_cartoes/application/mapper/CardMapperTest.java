@@ -46,8 +46,13 @@ public class CardMapperTest {
     public void givenCardSaveRequest_whenMappingToEntityWithCardFlagInvalid_thenReturnException() {
 
         // cenário
-        CardSaveRequest cardSaveRequest  = CardUtilTest.createCardSaveRequestDefault();
-        cardSaveRequest.setBandeiraCartao("INVALID_CARDFLAG");
+        CardSaveRequest cardSaveRequest  = CardSaveRequest
+                                            .builder()
+                                            .nome(CardUtilTest.NAME)
+                                            .bandeiraCartao("INVALID_CARDFLAG")
+                                            .renda(CardUtilTest.INCOME)
+                                            .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                            .build();
 
         // ação
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, 

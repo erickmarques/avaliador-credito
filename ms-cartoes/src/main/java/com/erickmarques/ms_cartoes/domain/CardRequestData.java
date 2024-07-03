@@ -2,14 +2,14 @@ package com.erickmarques.ms_cartoes.domain;
 
 import java.math.BigDecimal;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+@Builder
 public class CardRequestData {
-    private Long idCard;
-    private String cpf;
-    private String address;
-    private BigDecimal limitReleased;
+    private final Long idCard;
+    private final String cpf;
+    private final String address;
+    private final BigDecimal limitReleased;
 }

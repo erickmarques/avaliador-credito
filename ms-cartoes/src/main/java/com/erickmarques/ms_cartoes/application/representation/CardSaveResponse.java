@@ -4,19 +4,15 @@ import java.math.BigDecimal;
 
 import com.erickmarques.ms_cartoes.domain.CardFlag;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class CardSaveResponse {
-    private Long id;
-    private String nome;
-    private CardFlag bandeiraCartao;
-    private BigDecimal renda;
-    private BigDecimal limiteBasico;
+    private final Long id;
+    private final String nome;
+    private final CardFlag bandeiraCartao;
+    private final BigDecimal renda;
+    private final BigDecimal limiteBasico;
 }
