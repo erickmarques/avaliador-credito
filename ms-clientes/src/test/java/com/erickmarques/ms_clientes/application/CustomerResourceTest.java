@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -44,15 +43,6 @@ public class CustomerResourceTest {
 
     private final String BASE_URL = "/api/clientes";
 
-    private CustomerSaveRequest customerSaveRequest;
-    private CustomerSaveResponse customerSaveResponse;
-
-    @BeforeEach
-    void setUp() {
-        customerSaveRequest  = CustomerUtilTest.createCustomerSaveRequestDefault();
-        customerSaveResponse = CustomerUtilTest.createCustomerSaveResponseDefault();
-    }
-
     @Nested
     @DisplayName("Criar um novo Cliente")
     class TestSaveCustomer {
@@ -61,9 +51,13 @@ public class CustomerResourceTest {
         @DisplayName("Com dados válidos.")
         void givenValidCustomerData_whenSaveCustomer_thenReturnSavedCustomer() throws Exception{
 
+            // cenário
+            CustomerSaveRequest  customerSaveRequest  = CustomerUtilTest.createCustomerSaveRequestDefault();
+            CustomerSaveResponse customerSaveResponse = CustomerUtilTest.createCustomerSaveResponseDefault();
             when(customerService.createCustomer(any(CustomerSaveRequest.class)))
                 .thenReturn(customerSaveResponse);
 
+            // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(customerSaveRequest)))
@@ -78,11 +72,17 @@ public class CustomerResourceTest {
         @DisplayName("Com nome nulo.")
         void givenCustomerWithNullName_whenSaveCustomer_thenThrowException() throws Exception{
 
-            customerSaveRequest.setNome(null);
-
+            // cenário
+            CustomerSaveRequest customerWithNameIsNull = CustomerSaveRequest
+                                                            .builder()
+                                                            .nome(null)
+                                                            .cpf(CustomerUtilTest.CPF)
+                                                            .idade(CustomerUtilTest.AGE)
+                                                            .build();
+            // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(customerSaveRequest)))
+                    .content(mapper.writeValueAsString(customerWithNameIsNull)))
                     .andExpect(status().isBadRequest());
         } 
 
@@ -90,11 +90,18 @@ public class CustomerResourceTest {
         @DisplayName("Com cpf nulo.")
         void givenCustomerWithNullCpf_whenSaveCustomer_thenThrowException() throws Exception{
 
-            customerSaveRequest.setCpf(null);
+            // cenário
+            CustomerSaveRequest customerWithCpfIsNull = CustomerSaveRequest
+                                                            .builder()
+                                                            .nome(CustomerUtilTest.NAME)
+                                                            .cpf(null)
+                                                            .idade(CustomerUtilTest.AGE)
+                                                            .build();
 
+            // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(customerSaveRequest)))
+                    .content(mapper.writeValueAsString(customerWithCpfIsNull)))
                     .andExpect(status().isBadRequest());
         } 
 
@@ -102,11 +109,18 @@ public class CustomerResourceTest {
         @DisplayName("Com cpf inválido.")
         void givenCustomerWithInvalidCpf_whenSaveCustomer_thenThrowException() throws Exception{
 
-            customerSaveRequest.setCpf("INVALID_CPF");
+            // cenário
+            CustomerSaveRequest customerWithCpfInvalid = CustomerSaveRequest
+                                                            .builder()
+                                                            .nome(CustomerUtilTest.NAME)
+                                                            .cpf("INVALID_CPF")
+                                                            .idade(CustomerUtilTest.AGE)
+                                                            .build();
 
+            // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(customerSaveRequest)))
+                    .content(mapper.writeValueAsString(customerWithCpfInvalid)))
                     .andExpect(status().isBadRequest());
         } 
 
@@ -114,11 +128,18 @@ public class CustomerResourceTest {
         @DisplayName("Com idade nula.")
         void givenCustomerWithNullAge_whenSaveCustomer_thenThrowException() throws Exception{
 
-            customerSaveRequest.setIdade(null);
+            // cenário
+            CustomerSaveRequest customerWithAgeIsNull = CustomerSaveRequest
+                                                            .builder()
+                                                            .nome(CustomerUtilTest.NAME)
+                                                            .cpf(CustomerUtilTest.CPF)
+                                                            .idade(null)
+                                                            .build();
 
+            // ação / verificação
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(customerSaveRequest)))
+                    .content(mapper.writeValueAsString(customerWithAgeIsNull)))
                     .andExpect(status().isBadRequest());
         } 
     }
@@ -131,8 +152,12 @@ public class CustomerResourceTest {
         @DisplayName("Com cpf existente.")
         void givenExistingCpf_WhenFindByCpf_ReturnCustomer() throws Exception {
     
+            // cenário
+            CustomerSaveRequest  customerSaveRequest  = CustomerUtilTest.createCustomerSaveRequestDefault();
+            CustomerSaveResponse customerSaveResponse = CustomerUtilTest.createCustomerSaveResponseDefault();
             when(customerService.findByCpf(CustomerUtilTest.CPF)).thenReturn(customerSaveResponse);
     
+            // ação / verificação
             mockMvc.perform(get(BASE_URL)
                     .param("cpf", CustomerUtilTest.CPF))
                     .andExpect(status().isOk())
@@ -146,9 +171,11 @@ public class CustomerResourceTest {
         @DisplayName("Com cpf inexistente.")
         void givenNotExistingCpf_WhenFindByCpf_thenThrowException() throws Exception {
     
+            // cenário
             doThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado para o ID: " + CustomerUtilTest.CPF))
                 .when(customerService).findByCpf(CustomerUtilTest.CPF);
 
+            // ação / verificação
             mockMvc.perform(get(BASE_URL)
                     .param("cpf", CustomerUtilTest.CPF))
                     .andExpect(status().isNotFound());

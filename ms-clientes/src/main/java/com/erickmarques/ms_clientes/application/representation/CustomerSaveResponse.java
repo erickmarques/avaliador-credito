@@ -1,15 +1,13 @@
 package com.erickmarques.ms_clientes.application.representation;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class CustomerSaveResponse {
-    private Long id;
-    private String nome;
-    private String cpf;
-    private Integer idade;
+    private final Long id;
+    private final String nome;
+    private final String cpf;
+    private final Integer idade;
 }

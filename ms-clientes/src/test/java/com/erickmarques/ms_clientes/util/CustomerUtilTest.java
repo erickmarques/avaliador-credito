@@ -15,15 +15,32 @@ public class CustomerUtilTest {
     public static final Integer AGE = 30;
 
     public static Customer createCostumerDefault(){
-        return new Customer(ID, NAME, CPF, AGE);
+        return Customer
+                .builder()
+                .id(ID)
+                .name(NAME)
+                .cpf(CPF)
+                .age(AGE)
+                .build();
     }
 
     public static CustomerSaveResponse createCustomerSaveResponseDefault(){
-        return new CustomerSaveResponse(ID, NAME, CPF, AGE);
+        return CustomerSaveResponse
+                .builder()
+                .id(ID)
+                .nome(NAME)
+                .cpf(CPF)
+                .idade(AGE)
+                .build();
     }
 
     public static CustomerSaveRequest createCustomerSaveRequestDefault(){
-        return new CustomerSaveRequest(NAME, CPF, AGE);
+        return CustomerSaveRequest
+                .builder()
+                .nome(NAME)
+                .cpf(CPF)
+                .idade(AGE)
+                .build();
     }
 
     public static void assertCostumerDefault(Customer customer, CustomerSaveResponse customerSaveResponse){

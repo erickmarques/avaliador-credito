@@ -82,7 +82,7 @@ public class CustomerServiceTest {
         void givenCustomerWithExistingCpf_whenCreateCustomer_thenResponseStatusException(){
             
             // cenário
-            when(customerRepository.findByCpf(anyString())).thenReturn(Optional.of(new Customer()));
+            when(customerRepository.findByCpf(anyString())).thenReturn(Optional.of(customer));
 
             // ação
             ResponseStatusException exception = assertThrows(ResponseStatusException.class, 
@@ -104,7 +104,7 @@ public class CustomerServiceTest {
         void givenCustomerWithExistingCpf_whenFindByCpf_thenReturnCustomer(){
             
             // cenário
-            when(customerRepository.findByCpf(anyString())).thenReturn(Optional.of(new Customer()));
+            when(customerRepository.findByCpf(anyString())).thenReturn(Optional.of(customer));
             when(customerMapper.toDto(any(Customer.class))).thenReturn(customerSaveResponse);
 
             // ação

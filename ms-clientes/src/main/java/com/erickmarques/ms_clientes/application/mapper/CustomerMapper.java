@@ -11,24 +11,21 @@ import com.erickmarques.ms_clientes.domain.Customer;
 public class CustomerMapper {
     
     public Customer toEntity(CustomerSaveRequest customerSaveRequest){
-        Customer customer = new Customer();
-
-        customer.setName(customerSaveRequest.getNome());
-        customer.setCpf(customerSaveRequest.getCpf());
-        customer.setAge(customerSaveRequest.getIdade());
-
-        return customer;
+        return
+            Customer.builder()
+                    .name(customerSaveRequest.getNome())
+                    .cpf(customerSaveRequest.getCpf())
+                    .age(customerSaveRequest.getIdade())
+                    .build();
     }
     
     public CustomerSaveResponse toDto(Customer customer){
-        
-        CustomerSaveResponse customerSaveResponse = new CustomerSaveResponse();
-
-        customerSaveResponse.setId(customer.getId());
-        customerSaveResponse.setNome(customer.getName());
-        customerSaveResponse.setCpf(customer.getCpf());
-        customerSaveResponse.setIdade(customer.getAge());
-
-        return customerSaveResponse;
+        return 
+        CustomerSaveResponse.builder()
+                            .id(customer.getId())
+                            .nome(customer.getName())
+                            .cpf(customer.getCpf())
+                            .idade(customer.getAge())
+                            .build();
     }
 }
