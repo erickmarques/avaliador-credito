@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.erickmarques.ms_avaliador_credito.domain.CustomerCard;
-import com.erickmarques.ms_avaliador_credito.domain.CustomerData;
-import com.erickmarques.ms_avaliador_credito.domain.CustomerSituation;
+import com.erickmarques.ms_avaliador_credito.domain.response.CustomerCardResponse;
+import com.erickmarques.ms_avaliador_credito.domain.response.CustomerResponse;
+import com.erickmarques.ms_avaliador_credito.domain.response.CustomerSituation;
 import com.erickmarques.ms_avaliador_credito.infra.clients.CardResourceClient;
 import com.erickmarques.ms_avaliador_credito.infra.clients.CustomerResourceClient;
 
@@ -24,13 +24,13 @@ public class CreditAppraiserService {
 
     public CustomerSituation getSituation(String cpf){
         try {
-            ResponseEntity<CustomerData> customerDataResponse = customerResourceClient.getCustomerData(cpf);
-            ResponseEntity<List<CustomerCard>> cardsResponse  = cardResourceClient.getCardsByCpf(cpf);
+            ResponseEntity<CustomerResponse> customerDataResponse = customerResourceClient.getCustomerData(cpf);
+            ResponseEntity<List<CustomerCardResponse>> cardsResponse  = cardResourceClient.getCardsByCpf(cpf);
 
             return CustomerSituation
                         .builder()
-                        .customerData(customerDataResponse.getBody())
-                        .cards(cardsResponse.getBody())
+                        .cliente(customerDataResponse.getBody())
+                        .cartoes(cardsResponse.getBody())
                         .build();
 
         }catch (FeignException.FeignClientException e){

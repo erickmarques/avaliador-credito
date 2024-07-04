@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.erickmarques.ms_avaliador_credito.domain.CustomerSituation;
+import com.erickmarques.ms_avaliador_credito.domain.response.CustomerSituation;
 
 import lombok.RequiredArgsConstructor;
 
