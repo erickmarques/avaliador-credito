@@ -10,12 +10,12 @@ import com.erickmarques.ms_avaliador_credito.domain.CustomerCard;
 
 import java.util.List;
 
-@FeignClient(value = "ms-cartoes", path = "https://localhost:8092/api")
+@FeignClient(name = "ms-cartoes", url = "http://localhost:8092/api/cliente-cartoes")
 public interface CardResourceClient {
     
-    @GetMapping(params = "/cliente-cartoes/cpf")
+    @GetMapping(params = "cpf")
     ResponseEntity<List<CustomerCard>> getCardsByCpf(@RequestParam("cpf") String cpf);
 
-    @GetMapping(params = "/cartoes/cpf")
-    ResponseEntity<List<Card>> getCardsWithIncomeUpTo(@RequestParam("renda") Long renda);
+    /*@GetMapping(params = "/cartoes/cpf")
+    ResponseEntity<List<Card>> getCardsWithIncomeUpTo(@RequestParam("renda") Long renda);*/
 }

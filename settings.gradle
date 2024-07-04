@@ -2,3 +2,4 @@ rootProject.name = 'avaliador-credito'
 
 include 'ms-cartoes'
 include 'ms-clientes'
+include 'ms-avaliador-credito'
