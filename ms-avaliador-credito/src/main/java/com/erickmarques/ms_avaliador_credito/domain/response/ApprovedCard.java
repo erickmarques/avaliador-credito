@@ -1,4 +1,4 @@
-package com.erickmarques.ms_avaliador_credito.domain;
+package com.erickmarques.ms_avaliador_credito.domain.response;
 
 import java.math.BigDecimal;
 

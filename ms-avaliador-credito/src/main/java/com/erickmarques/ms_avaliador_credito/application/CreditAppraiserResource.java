@@ -2,12 +2,17 @@ package com.erickmarques.ms_avaliador_credito.application;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erickmarques.ms_avaliador_credito.domain.EvaluationData;
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerSituation;
+import com.erickmarques.ms_avaliador_credito.domain.response.EvaluationReturn;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -21,5 +26,11 @@ public class CreditAppraiserResource {
     public ResponseEntity<CustomerSituation> consultarSituacaoCliente(@RequestParam("cpf") String cpf){
         CustomerSituation customerSituation = creditAppraiserService.getSituation(cpf);
         return ResponseEntity.ok(customerSituation);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> realizarAvaliacao(@Valid @RequestBody EvaluationData evaluationData){
+        EvaluationReturn evaluationReturn = creditAppraiserService.realizeEvaluation(evaluationData);
+        return ResponseEntity.ok(evaluationReturn);
     }
 }
