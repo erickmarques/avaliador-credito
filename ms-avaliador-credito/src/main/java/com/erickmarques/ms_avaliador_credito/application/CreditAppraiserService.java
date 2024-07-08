@@ -40,6 +40,10 @@ public class CreditAppraiserService {
             ResponseEntity<CustomerResponse> customerDataResponse = customerResourceClient.getCustomerData(cpf);
             ResponseEntity<List<CustomerCardResponse>> cardsResponse  = cardResourceClient.getCardsByCpf(cpf);
 
+            if (customerDataResponse == null || cardsResponse == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Serviço de cliente/cartão indisponível!");
+            }
+
             return CustomerSituation
                         .builder()
                         .cliente(customerDataResponse.getBody())
