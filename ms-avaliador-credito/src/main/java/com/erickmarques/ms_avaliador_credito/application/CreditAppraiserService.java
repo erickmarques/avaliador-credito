@@ -7,6 +7,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 
+import com.erickmarques.ms_avaliador_credito.domain.CardRequestData;
+import com.erickmarques.ms_avaliador_credito.domain.CardRequestProtocol;
 import com.erickmarques.ms_avaliador_credito.domain.EvaluationData;
 import com.erickmarques.ms_avaliador_credito.domain.response.ApprovedCard;
 import com.erickmarques.ms_avaliador_credito.domain.response.CardResponse;
@@ -14,12 +16,15 @@ import com.erickmarques.ms_avaliador_credito.domain.response.CustomerCardRespons
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerResponse;
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerSituation;
 import com.erickmarques.ms_avaliador_credito.domain.response.EvaluationReturn;
+import com.erickmarques.ms_avaliador_credito.infra.clients.CardIssuanceRequestPublisher;
 import com.erickmarques.ms_avaliador_credito.infra.clients.CardResourceClient;
 import com.erickmarques.ms_avaliador_credito.infra.clients.CustomerResourceClient;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
+import java.util.UUID;
 import java.util.ArrayList;
 
 @Service
@@ -28,6 +33,7 @@ public class CreditAppraiserService {
     
     private final CardResourceClient cardResourceClient;
     private final CustomerResourceClient customerResourceClient;
+    private final CardIssuanceRequestPublisher cardIssuanceRequestPublisher;
 
     public CustomerSituation getSituation(String cpf){
         try {
@@ -75,6 +81,21 @@ public class CreditAppraiserService {
 
         }catch (FeignException.FeignClientException e){
             throw new ResponseStatusException(HttpStatus.valueOf(e.status()), e.getMessage());
+        }
+    }
+
+    public CardRequestProtocol requestCardIssuance(CardRequestData cardRequestData){
+
+        try {
+            cardIssuanceRequestPublisher.requestCard(cardRequestData);
+            var protocol = UUID.randomUUID().toString();
+
+            return CardRequestProtocol
+                    .builder()
+                    .protocol(protocol)
+                    .build();
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Ocorreu um erro ao realizar a solicitação do cartão!");
         }
     }
 

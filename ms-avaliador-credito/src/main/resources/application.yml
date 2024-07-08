@@ -9,7 +9,16 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: 
+  rabbitmq:
+    host: localhost
+    port: 5673
+    username: guest
+    password: guest
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+
+mq:
+  queues:
+    emissao-cartoes: emissao-cartoes

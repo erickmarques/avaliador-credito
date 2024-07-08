@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.erickmarques.ms_avaliador_credito.domain.CardRequestData;
+import com.erickmarques.ms_avaliador_credito.domain.CardRequestProtocol;
 import com.erickmarques.ms_avaliador_credito.domain.EvaluationData;
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerSituation;
 import com.erickmarques.ms_avaliador_credito.domain.response.EvaluationReturn;
@@ -29,8 +31,14 @@ public class CreditAppraiserResource {
     }
 
     @PostMapping
-    public ResponseEntity<?> realizarAvaliacao(@Valid @RequestBody EvaluationData evaluationData){
+    public ResponseEntity<EvaluationReturn> realizarAvaliacao(@Valid @RequestBody EvaluationData evaluationData){
         EvaluationReturn evaluationReturn = creditAppraiserService.realizeEvaluation(evaluationData);
         return ResponseEntity.ok(evaluationReturn);
+    }
+
+    @PostMapping("solicitacoes-cartao")
+    public ResponseEntity<CardRequestProtocol> solicitarCartao(@Valid @RequestBody CardRequestData cardRequestData){
+        CardRequestProtocol cardRequestProtocol = creditAppraiserService.requestCardIssuance(cardRequestData);
+        return ResponseEntity.ok(cardRequestProtocol);
     }
 }
