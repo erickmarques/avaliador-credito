@@ -8,21 +8,32 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.erickmarques.ms_avaliador_credito.domain.CardRequestData;
+import com.erickmarques.ms_avaliador_credito.domain.CardRequestProtocol;
 import com.erickmarques.ms_avaliador_credito.domain.EvaluationData;
 import com.erickmarques.ms_avaliador_credito.domain.response.CardResponse;
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerCardResponse;
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerResponse;
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerSituation;
 import com.erickmarques.ms_avaliador_credito.domain.response.EvaluationReturn;
+import com.erickmarques.ms_avaliador_credito.infra.clients.CardIssuanceRequestPublisher;
 import com.erickmarques.ms_avaliador_credito.infra.clients.CardResourceClient;
 import com.erickmarques.ms_avaliador_credito.infra.clients.CustomerResourceClient;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.UUID;
 import java.math.BigDecimal;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +44,9 @@ public class CreditAppraiserServiceTest {
 
     @Mock
     private CustomerResourceClient customerResourceClient;
+
+    @Mock
+    private CardIssuanceRequestPublisher cardIssuanceRequestPublisher;;
 
     @InjectMocks
     private CreditAppraiserService creditAppraiserService;
@@ -47,6 +61,7 @@ public class CreditAppraiserServiceTest {
     private final BigDecimal LIMIT  = BigDecimal.valueOf(300);
 	
 	private CustomerResponse customerResponse;
+    private CardRequestData cardRequestData;
 
     @BeforeEach
     void setUp() {
@@ -57,6 +72,14 @@ public class CreditAppraiserServiceTest {
                                 .nome(NAME)
                                 .idade(AGE)
                                 .build();
+
+        cardRequestData = CardRequestData
+                            .builder()
+                            .idCard(ID)
+                            .cpf(CPF)
+                            .address("Rua da Lira, Recife")
+                            .limitReleased(LIMIT)
+                            .build();
     }
 
     @Test
@@ -83,7 +106,7 @@ public class CreditAppraiserServiceTest {
 
     @Test
     public void shouldReturnApprovedCards_WhenEvaluationDataIsValid() {
-        // Arrange
+        // cenário
         EvaluationData evaluationData = EvaluationData
                                             .builder()
                                             .cpf(CPF)
@@ -103,14 +126,44 @@ public class CreditAppraiserServiceTest {
         when(customerResourceClient.getCustomerData(CPF)).thenReturn(new ResponseEntity<>(customerResponse, HttpStatus.OK));
         when(cardResourceClient.getCardsWithIncomeUpTo(INCOME.longValue())).thenReturn(new ResponseEntity<>(cards, HttpStatus.OK));
 
-        // Act
+        // ação
         EvaluationReturn evaluationReturn = creditAppraiserService.realizeEvaluation(evaluationData);
 
-        // Assert
+        // verificação
         assertNotNull(evaluationReturn);
         assertEquals(1, evaluationReturn.getCartoes().size());
         assertEquals(CARD_NAME, evaluationReturn.getCartoes().get(0).getCard());
         assertEquals(CARD_FLAG, evaluationReturn.getCartoes().get(0).getFlag());
+    }
+
+    @Test
+    public void shouldReturnProtocol_WhenRequestCardIssuanceIsSuccessful() throws JsonProcessingException {
+        // cenário
+        doNothing().when(cardIssuanceRequestPublisher).requestCard(cardRequestData);
+
+        // ação
+        CardRequestProtocol cardRequestProtocol = creditAppraiserService.requestCardIssuance(cardRequestData);
+
+        // verificação
+        assertNotNull(cardRequestProtocol);
+        assertNotNull(cardRequestProtocol.getProtocol());
+        assertTrue(UUID.fromString(cardRequestProtocol.getProtocol()) != null); // Verifica se é um UUID válido
+    }
+
+    @Test
+    public void shouldThrowResponseStatusExceptionWhenJsonProcessingExceptionIsThrown() throws JsonProcessingException {
+        
+        // cenário
+        doThrow(new JsonProcessingException("Error") {}).when(cardIssuanceRequestPublisher).requestCard(cardRequestData);
+
+        // ação
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            creditAppraiserService.requestCardIssuance(cardRequestData);
+        });
+
+        // verificação
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatusCode());
+        assertEquals("Ocorreu um erro ao realizar a solicitação do cartão!", exception.getReason());
     }
 
     
