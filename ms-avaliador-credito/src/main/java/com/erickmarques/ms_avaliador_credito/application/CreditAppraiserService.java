@@ -59,7 +59,7 @@ public class CreditAppraiserService {
 
         try {
             ResponseEntity<CustomerResponse> customerDataResponse = customerResourceClient.getCustomerData(evaluationData.getCpf());
-            ResponseEntity<List<CardResponse>> cardsResponse  = cardResourceClient.getCardsWithIncomeUpTo(evaluationData.getIncome());
+            ResponseEntity<List<CardResponse>> cardsResponse  = cardResourceClient.getCardsWithIncomeUpTo(evaluationData.getIncome().longValue());
             List<ApprovedCard> approvedCards = new ArrayList<>();
 
             if (cardsResponse != null && cardsResponse.getBody() != null && 

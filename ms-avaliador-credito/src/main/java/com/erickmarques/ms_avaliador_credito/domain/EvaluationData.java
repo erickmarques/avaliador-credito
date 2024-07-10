@@ -1,5 +1,7 @@
 package com.erickmarques.ms_avaliador_credito.domain;
 
+import java.math.BigDecimal;
+
 import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.validation.constraints.NotBlank;
@@ -16,5 +18,5 @@ public class EvaluationData {
     private final String cpf;
 
     @NotNull(message = "É preicos informar a renda!")
-    private final Long income;
+    private final BigDecimal income;
 }
