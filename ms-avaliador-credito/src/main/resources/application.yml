@@ -4,20 +4,11 @@ server:
 spring:
   application:
     name: ms-avaliador-credito
-  datasource:
-    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driverClassName: org.h2.Driver
-    username: sa
-    password: 
   rabbitmq:
     host: localhost
     port: 5673
     username: guest
     password: guest
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
 
 mq:
   queues:
