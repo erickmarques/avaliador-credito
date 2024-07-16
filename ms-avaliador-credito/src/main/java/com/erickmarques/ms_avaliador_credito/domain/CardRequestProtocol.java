@@ -1,9 +1,9 @@
 package com.erickmarques.ms_avaliador_credito.domain;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class CardRequestProtocol {
     private final String protocol;
