@@ -13,6 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.erickmarques.ms_avaliador_credito.domain.CardRequestData;
+import com.erickmarques.ms_avaliador_credito.domain.CardRequestProtocol;
 import com.erickmarques.ms_avaliador_credito.domain.EvaluationData;
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerCardResponse;
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerResponse;
@@ -114,5 +116,24 @@ public class CreditAppraiserResourceTest {
                     .andExpect(status().isBadRequest());
     }
 
-    
+    @Test
+    void shouldSolicitarCartaoSuccessfully() throws Exception {
+
+        // cenário
+        CardRequestData cardRequestData = CardRequestData
+                                            .builder()
+                                            .idCard(CreditAppraiserUtil.ID)
+                                            .cpf(CreditAppraiserUtil.CPF)
+                                            .address("Rua da Lira, Recife")
+                                            .limitReleased(CreditAppraiserUtil.LIMIT)
+                                            .build();
+        CardRequestProtocol cardRequestProtocol = CardRequestProtocol.builder().build();
+        when(creditAppraiserService.requestCardIssuance(cardRequestData)).thenReturn(cardRequestProtocol);
+
+        // ação / verificação
+        mockMvc.perform(post(BASE_URL.concat("/solicitacoes-cartao"))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(mapper.writeValueAsString(cardRequestData)))
+                    .andExpect(status().isOk());
+    }
 }
