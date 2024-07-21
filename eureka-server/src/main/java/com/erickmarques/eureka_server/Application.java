@@ -1,13 +1,11 @@
-package com.erickmarques.ms_cartoes;
+package com.erickmarques.eureka_server;
 
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
-@EnableRabbit
-@EnableDiscoveryClient
+@EnableEurekaServer
 public class Application {
 
 	public static void main(String[] args) {

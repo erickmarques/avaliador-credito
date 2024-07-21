@@ -21,12 +21,17 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set('springCloudVersion', "2023.0.2")
+}
+
 dependencies {
 	/* ====================================== Spring Boot ====================================================== */
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
 	/* ====================================== Spring Security ====================================================== */
 	//implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -50,6 +55,13 @@ dependencies {
 /* ====================================== Testes ====================================================== */
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.h2database:h2:1.4.200'
+}
+
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 tasks.named('test') {
