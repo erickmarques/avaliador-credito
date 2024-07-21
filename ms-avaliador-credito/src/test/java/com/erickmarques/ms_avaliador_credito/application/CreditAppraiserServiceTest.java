@@ -18,9 +18,9 @@ import com.erickmarques.ms_avaliador_credito.domain.response.CustomerCardRespons
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerResponse;
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerSituation;
 import com.erickmarques.ms_avaliador_credito.domain.response.EvaluationReturn;
-import com.erickmarques.ms_avaliador_credito.infra.clients.CardIssuanceRequestPublisher;
 import com.erickmarques.ms_avaliador_credito.infra.clients.CardResourceClient;
 import com.erickmarques.ms_avaliador_credito.infra.clients.CustomerResourceClient;
+import com.erickmarques.ms_avaliador_credito.infra.mqueue.CardIssuanceRequestPublisher;
 import com.erickmarques.ms_avaliador_credito.util.CreditAppraiserUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 

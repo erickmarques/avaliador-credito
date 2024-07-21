@@ -1,4 +1,4 @@
-package com.erickmarques.ms_avaliador_credito.infra.clients;
+package com.erickmarques.ms_avaliador_credito.infra.mqueue;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
