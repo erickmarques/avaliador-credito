@@ -19,8 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
 import com.erickmarques.ms_cartoes.application.representation.CustomerCardResponse;
 import com.erickmarques.ms_cartoes.application.service.CustomerCardService;
-import com.erickmarques.ms_cartoes.util.CardUtilTest;
-import com.erickmarques.ms_cartoes.util.CustomerCardUtilTest;
+import com.erickmarques.ms_cartoes.factory.CardFactory;
+import com.erickmarques.ms_cartoes.factory.CustomerCardFactory;
+
 import static org.hamcrest.Matchers.hasSize;
 
 /**
@@ -47,13 +48,13 @@ public class CustomerCardResourceTest {
         void givenCustomerCards_whenCpfProvided_thenReturnListOfCustomerCards() throws Exception{
     
             // cenário
-            List<CardSaveResponse> cards = List.of(CardUtilTest.createCardSaveResponseDefault());
-            List<CustomerCardResponse> customerCards = CustomerCardUtilTest.createCustomerCardResponseListDefault(cards);
-            when(customerCardService.findCardsByCpf(CustomerCardUtilTest.CPF)).thenReturn(customerCards);
+            List<CardSaveResponse> cards = List.of(CardFactory.createCardSaveResponseDefault());
+            List<CustomerCardResponse> customerCards = CustomerCardFactory.createCustomerCardResponseListDefault(cards);
+            when(customerCardService.findCardsByCpf(CustomerCardFactory.CPF)).thenReturn(customerCards);
     
             // ação / verificação
             mockMvc.perform(get(BASE_URL)
-                        .param("cpf", CustomerCardUtilTest.CPF))
+                        .param("cpf", CustomerCardFactory.CPF))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$[0].id").value(customerCards.get(0).getId()))
                         .andExpect(jsonPath("$[0].cpf").value(customerCards.get(0).getCpf()))
@@ -66,11 +67,11 @@ public class CustomerCardResourceTest {
         void givenCustomerCardWithNotExistingCpf_WhenfindByCpf_ThenReturnEmptyList() throws Exception{
     
             // cenário
-            when(customerCardService.findCardsByCpf(CustomerCardUtilTest.CPF)).thenReturn(Collections.emptyList());
+            when(customerCardService.findCardsByCpf(CustomerCardFactory.CPF)).thenReturn(Collections.emptyList());
     
             // ação / verificação
             mockMvc.perform(get(BASE_URL)
-                        .param("cpf", CustomerCardUtilTest.CPF))
+                        .param("cpf", CustomerCardFactory.CPF))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$", hasSize(0)));
         }

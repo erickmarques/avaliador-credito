@@ -11,10 +11,10 @@ import java.util.List;
 
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CustomerCard;
+import com.erickmarques.ms_cartoes.factory.CardFactory;
+import com.erickmarques.ms_cartoes.factory.CustomerCardFactory;
 import com.erickmarques.ms_cartoes.infra.repository.CardRepository;
 import com.erickmarques.ms_cartoes.infra.repository.CustomerCardRepository;
-import com.erickmarques.ms_cartoes.util.CardUtilTest;
-import com.erickmarques.ms_cartoes.util.CustomerCardUtilTest;
 
 
 /**
@@ -37,20 +37,20 @@ public class CustomerCardRepositoryTest {
     void setUp() {
 
         //cenário 
-        cards = cardRepository.saveAll(CardUtilTest.createCardListDefault());
-        customerCardRepository.saveAll(CustomerCardUtilTest.createCustomerCardListDefault(cards));
+        cards = cardRepository.saveAll(CardFactory.createCardListDefault());
+        customerCardRepository.saveAll(CustomerCardFactory.createCustomerCardListDefault(cards));
     }
 
     @Test
     void givenExistingCustomerCard_whenFindByCpfOrderByCardLimitDesc_thenCustomerCardShouldBeReturned(){
         //ação
-        List<CustomerCard> customerCards = customerCardRepository.findByCpfOrderByCardLimitDesc(CustomerCardUtilTest.CPF);
+        List<CustomerCard> customerCards = customerCardRepository.findByCpfOrderByCardLimitDesc(CustomerCardFactory.CPF);
 
         //verificação
         assertThat(customerCards).hasSize(3);
-        assertThat(customerCards.get(0).getId()).isEqualTo(CustomerCardUtilTest.ID);
-        assertThat(customerCards.get(0).getCpf()).isEqualTo(CustomerCardUtilTest.CPF);
-        assertThat(customerCards.get(0).getCardLimit()).isEqualTo(CustomerCardUtilTest.LIMIT);
+        assertThat(customerCards.get(0).getId()).isEqualTo(CustomerCardFactory.ID);
+        assertThat(customerCards.get(0).getCpf()).isEqualTo(CustomerCardFactory.CPF);
+        assertThat(customerCards.get(0).getCardLimit()).isEqualTo(CustomerCardFactory.LIMIT);
 
     }
 }

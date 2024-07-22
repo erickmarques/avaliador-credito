@@ -30,9 +30,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.erickmarques.ms_cartoes.application.mapper.CardMapper;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
+import com.erickmarques.ms_cartoes.assertions.CardAssertions;
 import com.erickmarques.ms_cartoes.domain.Card;
+import com.erickmarques.ms_cartoes.factory.CardFactory;
 import com.erickmarques.ms_cartoes.infra.repository.CardRepository;
-import com.erickmarques.ms_cartoes.util.CardUtilTest;
 
 /**
  * Classe de teste para {@link CardService}.
@@ -56,9 +57,9 @@ public class CardServiceTest {
 
     @BeforeEach
     void setUp() {
-        card             = CardUtilTest.createCardDefault();
-        cardSaveRequest  = CardUtilTest.createCardSaveRequestDefault();
-        cardSaveResponse = CardUtilTest.createCardSaveResponseDefault();
+        card             = CardFactory.createCardDefault();
+        cardSaveRequest  = CardFactory.createCardSaveRequestDefault();
+        cardSaveResponse = CardFactory.createCardSaveResponseDefault();
     }
 
     @Nested
@@ -78,7 +79,7 @@ public class CardServiceTest {
 
             // verificação
             verify(cardRepository, times(1)).save(any(Card.class));
-            CardUtilTest.assertCostumerDefault(card, cardSaveResponse);
+            CardAssertions.assertCardDefault(card, cardSaveResponse);
         }
 
         @Test
@@ -109,7 +110,7 @@ public class CardServiceTest {
 
             // cenário
             BigDecimal income = BigDecimal.valueOf(6000);
-            when(cardRepository.findByIncomeLessThanEqualOrderByIncomeDesc(income)).thenReturn(CardUtilTest.createCardListDefault());
+            when(cardRepository.findByIncomeLessThanEqualOrderByIncomeDesc(income)).thenReturn(CardFactory.createCardListDefault());
             
             // ação
             List<CardSaveResponse> cards = cardService.findByIncomeLessThanEqualOrderByIncomeDesc(income.longValue());

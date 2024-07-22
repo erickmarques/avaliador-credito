@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.erickmarques.ms_cartoes.domain.CardRequestData;
-import com.erickmarques.ms_cartoes.util.CustomerCardUtilTest;
+import com.erickmarques.ms_cartoes.factory.CustomerCardFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,7 +37,7 @@ public class CardIssuanceServiceTest {
     void whenValidPayload_thenSaveCardRequestData() throws JsonMappingException, JsonProcessingException{
         
         // cenário
-        CardRequestData data = CustomerCardUtilTest.createCardRequestDataDefault();
+        CardRequestData data = CustomerCardFactory.createCardRequestDataDefault();
         String payload       = mapper.writeValueAsString(data);
         when(mapper.readValue(payload, CardRequestData.class)).thenReturn(data);
 

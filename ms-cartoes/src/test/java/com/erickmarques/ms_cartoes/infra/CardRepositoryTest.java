@@ -11,8 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.erickmarques.ms_cartoes.domain.Card;
+import com.erickmarques.ms_cartoes.factory.CardFactory;
 import com.erickmarques.ms_cartoes.infra.repository.CardRepository;
-import com.erickmarques.ms_cartoes.util.CardUtilTest;
 
 /**
  * Classe de teste para {@link CardRepository}.
@@ -29,7 +29,7 @@ public class CardRepositoryTest {
     void setUp() {
 
         //cenário 
-        cardRepository.saveAll(CardUtilTest.createCardListDefault());
+        cardRepository.saveAll(CardFactory.createCardListDefault());
     }
 
     @Test
@@ -39,11 +39,11 @@ public class CardRepositoryTest {
 
         //verificação
         assertThat(cards).hasSize(2);
-        assertThat(cards.get(0).getId()).isEqualTo(CardUtilTest.ID);
-        assertThat(cards.get(0).getName()).isEqualTo(CardUtilTest.NAME);
-        assertThat(cards.get(0).getCardFlag()).isEqualTo(CardUtilTest.MASTERCARD);
-        assertThat(cards.get(0).getIncome()).isEqualTo(CardUtilTest.INCOME);
-        assertThat(cards.get(0).getBasicLimit()).isEqualTo(CardUtilTest.BASIC_LIMIT);
+        assertThat(cards.get(0).getId()).isEqualTo(CardFactory.ID);
+        assertThat(cards.get(0).getName()).isEqualTo(CardFactory.NAME);
+        assertThat(cards.get(0).getCardFlag()).isEqualTo(CardFactory.MASTERCARD);
+        assertThat(cards.get(0).getIncome()).isEqualTo(CardFactory.INCOME);
+        assertThat(cards.get(0).getBasicLimit()).isEqualTo(CardFactory.BASIC_LIMIT);
 
     }
 }

@@ -24,9 +24,9 @@ import com.erickmarques.ms_cartoes.application.representation.CustomerCardRespon
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CardRequestData;
 import com.erickmarques.ms_cartoes.domain.CustomerCard;
+import com.erickmarques.ms_cartoes.factory.CardFactory;
+import com.erickmarques.ms_cartoes.factory.CustomerCardFactory;
 import com.erickmarques.ms_cartoes.infra.repository.CustomerCardRepository;
-import com.erickmarques.ms_cartoes.util.CardUtilTest;
-import com.erickmarques.ms_cartoes.util.CustomerCardUtilTest;
 
 /**
  * Classe de teste para {@link CardService}.
@@ -59,8 +59,8 @@ public class CustomerCardServiceTest {
         public void givenCustomerCards_WhenfindByCpf_ThenReturnCustomerCards() {
 
             // cenário
-            List<Card> cards = CardUtilTest.createCardListDefault();
-            when(customerCardRepository.findByCpfOrderByCardLimitDesc(anyString())).thenReturn(CustomerCardUtilTest.createCustomerCardListDefault(cards));
+            List<Card> cards = CardFactory.createCardListDefault();
+            when(customerCardRepository.findByCpfOrderByCardLimitDesc(anyString())).thenReturn(CustomerCardFactory.createCustomerCardListDefault(cards));
             
             // ação
             List<CustomerCardResponse> customerCards = customerCardService.findCardsByCpf(anyString());
@@ -94,9 +94,9 @@ public class CustomerCardServiceTest {
         void givenNewCustomerCard_whenSave_thenCustomerCardIsCreatedSuccessfully(){
             
             // cenário
-            card            = CardUtilTest.createCardDefault();
-            customerCard    = CustomerCardUtilTest.createCustomerCardDefault();
-            cardRequestData = CustomerCardUtilTest.createCardRequestDataDefault();
+            card            = CardFactory.createCardDefault();
+            customerCard    = CustomerCardFactory.createCustomerCardDefault();
+            cardRequestData = CustomerCardFactory.createCardRequestDataDefault();
 
             when(cardService.findById(anyLong())).thenReturn(card);
             when(customerCardMapper.toEntity(cardRequestData, card)).thenReturn(customerCard);

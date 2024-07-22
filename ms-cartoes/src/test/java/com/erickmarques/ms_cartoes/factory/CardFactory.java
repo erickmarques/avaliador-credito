@@ -1,16 +1,16 @@
-package com.erickmarques.ms_cartoes.util;
+package com.erickmarques.ms_cartoes.factory;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+
 
 import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CardFlag;
 
-public class CardUtilTest {
+public class CardFactory {
 
     public static final Long ID                = 1L;
     public static final String NAME            = "BLACK";
@@ -78,12 +78,4 @@ public class CardUtilTest {
                 );
     }
 
-    public static void assertCostumerDefault(Card card, CardSaveResponse cardSaveResponse) {
-        assertThat(cardSaveResponse.getId()).isEqualTo(card.getId());
-        assertThat(cardSaveResponse.getNome()).isEqualTo(card.getName());
-        assertThat(cardSaveResponse.getBandeiraCartao()).isEqualTo(card.getCardFlag());
-        assertThat(cardSaveResponse.getRenda()).isEqualTo(card.getIncome());
-        assertThat(cardSaveResponse.getLimiteBasico()).isEqualTo(card.getBasicLimit());
-    }
-    
 }

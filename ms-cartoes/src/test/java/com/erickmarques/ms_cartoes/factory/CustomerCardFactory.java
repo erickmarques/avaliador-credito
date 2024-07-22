@@ -1,4 +1,4 @@
-package com.erickmarques.ms_cartoes.util;
+package com.erickmarques.ms_cartoes.factory;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,7 +9,7 @@ import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CardRequestData;
 import com.erickmarques.ms_cartoes.domain.CustomerCard;
 
-public class CustomerCardUtilTest {
+public class CustomerCardFactory {
 
     public static final Long ID          = 1L;
     public static final String CPF       = "87439818016";
@@ -21,7 +21,7 @@ public class CustomerCardUtilTest {
                     .builder()
                     .id(ID)
                     .cpf(CPF)
-                    .card(CardUtilTest.createCardDefault())
+                    .card(CardFactory.createCardDefault())
                     .cardLimit(LIMIT)
                     .address(ENDERECO)
                     .build();

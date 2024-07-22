@@ -13,8 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
+import com.erickmarques.ms_cartoes.assertions.CardAssertions;
 import com.erickmarques.ms_cartoes.domain.Card;
-import com.erickmarques.ms_cartoes.util.CardUtilTest;
+import com.erickmarques.ms_cartoes.factory.CardFactory;
 
 /**
  * Classe de teste para {@link CardMapper}.
@@ -30,7 +31,7 @@ public class CardMapperTest {
     public void givenCardSaveRequest_whenMappingToEntity_thenMapCorrectly() {
 
         // cenário
-        CardSaveRequest cardSaveRequest  = CardUtilTest.createCardSaveRequestDefault();
+        CardSaveRequest cardSaveRequest  = CardFactory.createCardSaveRequestDefault();
 
         // ação
         Card card = cardMapper.toEntity(cardSaveRequest);
@@ -48,10 +49,10 @@ public class CardMapperTest {
         // cenário
         CardSaveRequest cardSaveRequest  = CardSaveRequest
                                             .builder()
-                                            .nome(CardUtilTest.NAME)
+                                            .nome(CardFactory.NAME)
                                             .bandeiraCartao("INVALID_CARDFLAG")
-                                            .renda(CardUtilTest.INCOME)
-                                            .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                            .renda(CardFactory.INCOME)
+                                            .limiteBasico(CardFactory.BASIC_LIMIT)
                                             .build();
 
         // ação
@@ -67,13 +68,13 @@ public class CardMapperTest {
     public void givenCard_whenMappingToDto_thenMapCorrectly() {
 
         // cenário
-        Card card = CardUtilTest.createCardDefault();
+        Card card = CardFactory.createCardDefault();
 
         // ação
         CardSaveResponse cardSaveResponse = cardMapper.toDto(card);
 
          // verificação
-         CardUtilTest.assertCostumerDefault(card, cardSaveResponse);
+         CardAssertions.assertCardDefault(card, cardSaveResponse);
     }
     
 }

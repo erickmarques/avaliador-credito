@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveRequest;
 import com.erickmarques.ms_cartoes.application.representation.CardSaveResponse;
 import com.erickmarques.ms_cartoes.application.service.CardService;
-import com.erickmarques.ms_cartoes.util.CardUtilTest;
+import com.erickmarques.ms_cartoes.factory.CardFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -50,8 +50,8 @@ public class CardResourceTest {
         void givenNewCard_whenCreateCard_thenCardIsCreatedSuccessfully() throws Exception{
 
             // cenário
-            CardSaveRequest cardSaveRequest   = CardUtilTest.createCardSaveRequestDefault();
-            CardSaveResponse cardSaveResponse = CardUtilTest.createCardSaveResponseDefault();
+            CardSaveRequest cardSaveRequest   = CardFactory.createCardSaveRequestDefault();
+            CardSaveResponse cardSaveResponse = CardFactory.createCardSaveResponseDefault();
             when(cardService.createCard(cardSaveRequest)).thenReturn(cardSaveResponse);
 
             // ação / verificação
@@ -70,9 +70,9 @@ public class CardResourceTest {
             CardSaveRequest cardWithNameIsNull  = CardSaveRequest
                                                     .builder()
                                                     .nome(null)
-                                                    .bandeiraCartao(CardUtilTest.MASTERCARD.toString())
-                                                    .renda(CardUtilTest.INCOME)
-                                                    .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                    .bandeiraCartao(CardFactory.MASTERCARD.toString())
+                                                    .renda(CardFactory.INCOME)
+                                                    .limiteBasico(CardFactory.BASIC_LIMIT)
                                                     .build();
 
             // ação / verificação
@@ -90,9 +90,9 @@ public class CardResourceTest {
             CardSaveRequest cardWithNameIsEmpty  = CardSaveRequest
                                                     .builder()
                                                     .nome(" ")
-                                                    .bandeiraCartao(CardUtilTest.MASTERCARD.toString())
-                                                    .renda(CardUtilTest.INCOME)
-                                                    .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                    .bandeiraCartao(CardFactory.MASTERCARD.toString())
+                                                    .renda(CardFactory.INCOME)
+                                                    .limiteBasico(CardFactory.BASIC_LIMIT)
                                                     .build();
             // ação / verificação
             mockMvc.perform(post(BASE_URL)
@@ -108,10 +108,10 @@ public class CardResourceTest {
             // cenário
             CardSaveRequest cardWithCardFlagIsNull  = CardSaveRequest
                                                         .builder()
-                                                        .nome(CardUtilTest.NAME)
+                                                        .nome(CardFactory.NAME)
                                                         .bandeiraCartao(null)
-                                                        .renda(CardUtilTest.INCOME)
-                                                        .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                        .renda(CardFactory.INCOME)
+                                                        .limiteBasico(CardFactory.BASIC_LIMIT)
                                                         .build();
 
             // ação / verificação
@@ -128,10 +128,10 @@ public class CardResourceTest {
             // cenário
             CardSaveRequest cardWithCardFlagIsEmpty  = CardSaveRequest
                                                         .builder()
-                                                        .nome(CardUtilTest.NAME)
+                                                        .nome(CardFactory.NAME)
                                                         .bandeiraCartao(null)
-                                                        .renda(CardUtilTest.INCOME)
-                                                        .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                        .renda(CardFactory.INCOME)
+                                                        .limiteBasico(CardFactory.BASIC_LIMIT)
                                                         .build();
 
             // ação / verificação
@@ -148,10 +148,10 @@ public class CardResourceTest {
             // cenário
             CardSaveRequest cardWithIncomeIsNull  = CardSaveRequest
                                                         .builder()
-                                                        .nome(CardUtilTest.NAME)
-                                                        .bandeiraCartao(CardUtilTest.MASTERCARD.toString())
+                                                        .nome(CardFactory.NAME)
+                                                        .bandeiraCartao(CardFactory.MASTERCARD.toString())
                                                         .renda(null)
-                                                        .limiteBasico(CardUtilTest.BASIC_LIMIT)
+                                                        .limiteBasico(CardFactory.BASIC_LIMIT)
                                                         .build();
 
             // ação / verificação
@@ -168,9 +168,9 @@ public class CardResourceTest {
             // cenário
             CardSaveRequest cardWithBasicLimitIsNull  = CardSaveRequest
                                                             .builder()
-                                                            .nome(CardUtilTest.NAME)
-                                                            .bandeiraCartao(CardUtilTest.MASTERCARD.toString())
-                                                            .renda(CardUtilTest.INCOME)
+                                                            .nome(CardFactory.NAME)
+                                                            .bandeiraCartao(CardFactory.MASTERCARD.toString())
+                                                            .renda(CardFactory.INCOME)
                                                             .limiteBasico(null)
                                                             .build();
 
@@ -192,7 +192,7 @@ public class CardResourceTest {
             //cenário
             Long renda = 3000L;
             when(cardService.findByIncomeLessThanEqualOrderByIncomeDesc(renda))
-                .thenReturn(CardUtilTest.createCardSaveResponseListDefault());
+                .thenReturn(CardFactory.createCardSaveResponseListDefault());
     
             // ação / verificação
             mockMvc.perform(get(BASE_URL)

@@ -9,8 +9,8 @@ import com.erickmarques.ms_cartoes.application.representation.CustomerCardRespon
 import com.erickmarques.ms_cartoes.domain.Card;
 import com.erickmarques.ms_cartoes.domain.CardRequestData;
 import com.erickmarques.ms_cartoes.domain.CustomerCard;
-import com.erickmarques.ms_cartoes.util.CardUtilTest;
-import com.erickmarques.ms_cartoes.util.CustomerCardUtilTest;
+import com.erickmarques.ms_cartoes.factory.CardFactory;
+import com.erickmarques.ms_cartoes.factory.CustomerCardFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,7 +28,7 @@ public class CustomerCardMapperTest {
     public void givenCostumerCard_whenMappingToDto_thenMapCorrectly() {
 
         // cenário
-        CustomerCard customerCard = CustomerCardUtilTest.createCustomerCardDefault();
+        CustomerCard customerCard = CustomerCardFactory.createCustomerCardDefault();
 
         // ação
         CustomerCardResponse customerCardResponse = customerCardMapper.toDto(customerCard);
@@ -44,8 +44,8 @@ public class CustomerCardMapperTest {
     public void givenCostumerCard_whenMappingToEntity_thenMapCorrectly() {
 
         // cenário
-        CardRequestData cardRequestData = CustomerCardUtilTest.createCardRequestDataDefault();
-        Card card = CardUtilTest.createCardDefault();
+        CardRequestData cardRequestData = CustomerCardFactory.createCardRequestDataDefault();
+        Card card = CardFactory.createCardDefault();
 
         // ação
         CustomerCard customerCard = customerCardMapper.toEntity(cardRequestData, card);
