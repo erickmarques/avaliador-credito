@@ -1,3 +1,16 @@
+spring:
+  application:
+    name: ms-clientes
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      
 server:
   port: 0
 
@@ -11,16 +24,3 @@ eureka:
     lease-renewal-interval-in-seconds: 1
     lease-expiration-duration-in-seconds: 1
 
-
-spring:
-  application:
-    name: ms-clientes
-  datasource:
-    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driverClassName: org.h2.Driver
-    username: sa
-    password: 
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
