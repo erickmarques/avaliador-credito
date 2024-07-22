@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.erickmarques.ms_clientes.domain.Customer;
-import com.erickmarques.ms_clientes.util.CustomerUtilTest;
+import com.erickmarques.ms_clientes.factory.CustomerFactory;
 
 
 /**
@@ -31,14 +31,14 @@ public class CustomerRepositoryTest {
     void setUp() {
 
         //cenário 
-        customerDefault = CustomerUtilTest.createCostumerDefault();
+        customerDefault = CustomerFactory.createCostumerDefault();
         customerRepository.save(customerDefault);
     }
 
     @Test
     void givenExistingCustomer_whenFindByCpf_thenCustomerShouldBeReturned(){
         //ação
-        Optional<Customer> customer = customerRepository.findByCpf(CustomerUtilTest.CPF);
+        Optional<Customer> customer = customerRepository.findByCpf(CustomerFactory.CPF);
 
         //verificação
         assertThat(customer).isPresent();

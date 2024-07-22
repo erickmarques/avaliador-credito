@@ -26,9 +26,9 @@ import com.erickmarques.ms_clientes.application.mapper.CustomerMapper;
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveRequest;
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveResponse;
 import com.erickmarques.ms_clientes.domain.Customer;
+import com.erickmarques.ms_clientes.factory.CustomerFactory;
 import com.erickmarques.ms_clientes.infra.CustomerRepository;
-import com.erickmarques.ms_clientes.util.CustomerUtilTest;
-
+import com.erickmarques.ms_clientes.assertions.CustomerAssertions;
 
 /**
  * Classe de teste para {@link CustomerService}.
@@ -52,9 +52,9 @@ public class CustomerServiceTest {
 
     @BeforeEach
     void setUp() {
-        customer             = CustomerUtilTest.createCostumerDefault();
-        customerSaveRequest  = CustomerUtilTest.createCustomerSaveRequestDefault();
-        customerSaveResponse = CustomerUtilTest.createCustomerSaveResponseDefault();
+        customer             = CustomerFactory.createCostumerDefault();
+        customerSaveRequest  = CustomerFactory.createCustomerSaveRequestDefault();
+        customerSaveResponse = CustomerFactory.createCustomerSaveResponseDefault();
     }
 
     @Nested
@@ -74,7 +74,7 @@ public class CustomerServiceTest {
 
             // verificação
             verify(customerRepository, times(1)).save(any(Customer.class));
-            CustomerUtilTest.assertCostumerDefault(customer, customerSaveResponse);
+            CustomerAssertions.assertCustomerDefault(customer, customerSaveResponse);
         }
 
         @Test
@@ -112,7 +112,7 @@ public class CustomerServiceTest {
 
             // verificação
             verify(customerRepository, times(1)).findByCpf(anyString());
-            CustomerUtilTest.assertCostumerDefault(customer, customerSaveResponse);
+            CustomerAssertions.assertCustomerDefault(customer, customerSaveResponse);
         }
 
         @Test
@@ -120,15 +120,15 @@ public class CustomerServiceTest {
         void givenCustomerWithNotExistingCpf_whenFindByCpf_thenResponseStatusException(){
             
             // cenário
-            when(customerRepository.findByCpf(CustomerUtilTest.CPF)).thenReturn(Optional.empty());
+            when(customerRepository.findByCpf(CustomerFactory.CPF)).thenReturn(Optional.empty());
             
             // ação
             ResponseStatusException exception = assertThrows(ResponseStatusException.class, 
-            () -> customerService.findByCpf(CustomerUtilTest.CPF));
+            () -> customerService.findByCpf(CustomerFactory.CPF));
         
             // verificação
             assertThat(exception.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-            assertThat(exception.getReason()).isEqualTo("Cliente não encontrado para o cpf: " + CustomerUtilTest.CPF);
+            assertThat(exception.getReason()).isEqualTo("Cliente não encontrado para o cpf: " + CustomerFactory.CPF);
         }
     }
 }

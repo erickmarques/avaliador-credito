@@ -10,7 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveRequest;
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveResponse;
 import com.erickmarques.ms_clientes.domain.Customer;
-import com.erickmarques.ms_clientes.util.CustomerUtilTest;
+import com.erickmarques.ms_clientes.factory.CustomerFactory;
+import com.erickmarques.ms_clientes.assertions.CustomerAssertions;
 
 /**
  * Classe de teste para {@link CustomerMapper}.
@@ -26,7 +27,7 @@ public class CustomerMapperTest {
     public void givenCustomerSaveRequest_whenMappingToEntity_thenMapCorrectly() {
 
         // cenário
-        CustomerSaveRequest customerSaveRequest  = CustomerUtilTest.createCustomerSaveRequestDefault();
+        CustomerSaveRequest customerSaveRequest  = CustomerFactory.createCustomerSaveRequestDefault();
 
         // ação
         Customer customer = customerMapper.toEntity(customerSaveRequest);
@@ -41,12 +42,12 @@ public class CustomerMapperTest {
     public void givenCustomer_whenMappingToDto_thenMapCorrectly() {
 
         // cenário
-        Customer customer = CustomerUtilTest.createCostumerDefault();
+        Customer customer = CustomerFactory.createCostumerDefault();
 
          // ação
          CustomerSaveResponse customerSaveResponse = customerMapper.toDto(customer);
 
          // verificação
-        CustomerUtilTest.assertCostumerDefault(customer, customerSaveResponse);
+         CustomerAssertions.assertCustomerDefault(customer, customerSaveResponse);
     }
 }

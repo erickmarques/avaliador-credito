@@ -21,7 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveRequest;
 import com.erickmarques.ms_clientes.application.representation.CustomerSaveResponse;
-import com.erickmarques.ms_clientes.util.CustomerUtilTest;
+import com.erickmarques.ms_clientes.factory.CustomerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -52,8 +52,8 @@ public class CustomerResourceTest {
         void givenValidCustomerData_whenSaveCustomer_thenReturnSavedCustomer() throws Exception{
 
             // cenário
-            CustomerSaveRequest  customerSaveRequest  = CustomerUtilTest.createCustomerSaveRequestDefault();
-            CustomerSaveResponse customerSaveResponse = CustomerUtilTest.createCustomerSaveResponseDefault();
+            CustomerSaveRequest  customerSaveRequest  = CustomerFactory.createCustomerSaveRequestDefault();
+            CustomerSaveResponse customerSaveResponse = CustomerFactory.createCustomerSaveResponseDefault();
             when(customerService.createCustomer(any(CustomerSaveRequest.class)))
                 .thenReturn(customerSaveResponse);
 
@@ -76,8 +76,8 @@ public class CustomerResourceTest {
             CustomerSaveRequest customerWithNameIsNull = CustomerSaveRequest
                                                             .builder()
                                                             .nome(null)
-                                                            .cpf(CustomerUtilTest.CPF)
-                                                            .idade(CustomerUtilTest.AGE)
+                                                            .cpf(CustomerFactory.CPF)
+                                                            .idade(CustomerFactory.AGE)
                                                             .build();
             // ação / verificação
             mockMvc.perform(post(BASE_URL)
@@ -93,9 +93,9 @@ public class CustomerResourceTest {
             // cenário
             CustomerSaveRequest customerWithCpfIsNull = CustomerSaveRequest
                                                             .builder()
-                                                            .nome(CustomerUtilTest.NAME)
+                                                            .nome(CustomerFactory.NAME)
                                                             .cpf(null)
-                                                            .idade(CustomerUtilTest.AGE)
+                                                            .idade(CustomerFactory.AGE)
                                                             .build();
 
             // ação / verificação
@@ -112,9 +112,9 @@ public class CustomerResourceTest {
             // cenário
             CustomerSaveRequest customerWithCpfInvalid = CustomerSaveRequest
                                                             .builder()
-                                                            .nome(CustomerUtilTest.NAME)
+                                                            .nome(CustomerFactory.NAME)
                                                             .cpf("INVALID_CPF")
-                                                            .idade(CustomerUtilTest.AGE)
+                                                            .idade(CustomerFactory.AGE)
                                                             .build();
 
             // ação / verificação
@@ -131,8 +131,8 @@ public class CustomerResourceTest {
             // cenário
             CustomerSaveRequest customerWithAgeIsNull = CustomerSaveRequest
                                                             .builder()
-                                                            .nome(CustomerUtilTest.NAME)
-                                                            .cpf(CustomerUtilTest.CPF)
+                                                            .nome(CustomerFactory.NAME)
+                                                            .cpf(CustomerFactory.CPF)
                                                             .idade(null)
                                                             .build();
 
@@ -153,13 +153,13 @@ public class CustomerResourceTest {
         void givenExistingCpf_WhenFindByCpf_ReturnCustomer() throws Exception {
     
             // cenário
-            CustomerSaveRequest  customerSaveRequest  = CustomerUtilTest.createCustomerSaveRequestDefault();
-            CustomerSaveResponse customerSaveResponse = CustomerUtilTest.createCustomerSaveResponseDefault();
-            when(customerService.findByCpf(CustomerUtilTest.CPF)).thenReturn(customerSaveResponse);
+            CustomerSaveRequest  customerSaveRequest  = CustomerFactory.createCustomerSaveRequestDefault();
+            CustomerSaveResponse customerSaveResponse = CustomerFactory.createCustomerSaveResponseDefault();
+            when(customerService.findByCpf(CustomerFactory.CPF)).thenReturn(customerSaveResponse);
     
             // ação / verificação
             mockMvc.perform(get(BASE_URL)
-                    .param("cpf", CustomerUtilTest.CPF))
+                    .param("cpf", CustomerFactory.CPF))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").isNotEmpty())
                     .andExpect(jsonPath("$.nome").value(customerSaveRequest.getNome()))
@@ -172,12 +172,12 @@ public class CustomerResourceTest {
         void givenNotExistingCpf_WhenFindByCpf_thenThrowException() throws Exception {
     
             // cenário
-            doThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado para o ID: " + CustomerUtilTest.CPF))
-                .when(customerService).findByCpf(CustomerUtilTest.CPF);
+            doThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado para o ID: " + CustomerFactory.CPF))
+                .when(customerService).findByCpf(CustomerFactory.CPF);
 
             // ação / verificação
             mockMvc.perform(get(BASE_URL)
-                    .param("cpf", CustomerUtilTest.CPF))
+                    .param("cpf", CustomerFactory.CPF))
                     .andExpect(status().isNotFound());
         }
     }
