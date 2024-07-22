@@ -10,7 +10,7 @@ import com.erickmarques.ms_avaliador_credito.domain.response.CustomerCardRespons
 
 import java.util.List;
 
-@FeignClient(name = "ms-cartoes", url = "http://localhost:8080/api")
+@FeignClient(value = "ms-cartoes", path = "/api")
 public interface CardResourceClient {
     
     @GetMapping(path = "/cliente-cartoes", params = "cpf")

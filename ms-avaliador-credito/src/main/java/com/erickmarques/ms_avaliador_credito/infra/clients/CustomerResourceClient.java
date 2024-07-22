@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.erickmarques.ms_avaliador_credito.domain.response.CustomerResponse;
 
-@FeignClient(name = "ms-clientes", url = "http://localhost:8080/api/clientes")
+@FeignClient(value = "ms-clientes", path = "/api/clientes")
 public interface CustomerResourceClient {
     
     @GetMapping(params = "cpf")
